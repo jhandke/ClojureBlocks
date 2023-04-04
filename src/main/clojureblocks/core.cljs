@@ -8,10 +8,12 @@
 (def blockly-div (atom nil))
 (def blockly-area (atom nil))
 (def button-evaluate (atom nil))
+(def output-div (atom nil))
 
 (defn generate-code []
-  (.workspaceToCode clojureblocks.generator.clojure/clojure-generator @workspace)
-  )
+  (println "click")
+  (let [code (.workspaceToCode clojureblocks.generator.clojure/clojure-generator @workspace)]
+    (set! (.. @output-div -innerText) code)))
 
 (defn change-handler []
   (println "something changed :o"))
@@ -72,5 +74,6 @@
    change-handler)
 
   (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
-  (.addEventListener @button-evaluate "clicked evaluate" (fn [] (println "click")))
+  (.addEventListener @button-evaluate "click" generate-code)
+  (reset! output-div (.getElementById js/document "output"))
   (println (.getAllBlocks ^js/Object @workspace)))
