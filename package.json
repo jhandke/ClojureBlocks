@@ -2,6 +2,7 @@
   "name": "clojureblocks-cljs",
   "version": "0.0.1",
   "private": true,
+  "license": "EPLv1",
   "devDependencies": {
     "shadow-cljs": "2.22.9"
   },
