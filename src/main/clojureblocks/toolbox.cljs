@@ -1,6 +1,12 @@
-(ns clojureblocks.toolbox)
+(ns clojureblocks.toolbox
+  (:require [clojureblocks.blocks.all]))
 
-(def toolbox {:kind "flyoutToolbox"
-              :contents [{:kind "block"
-                          :type "add_block"}]})
+(defn generate-toolbox []
+  {:kind "flyoutToolbox"
+   :contents (map
+               (fn [block]
+                 (let [name (get block :type)]
+                   {:kind "block"
+                    :type name}))
+               (clojureblocks.blocks.all/blocks))})
 

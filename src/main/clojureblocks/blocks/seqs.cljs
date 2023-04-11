@@ -3,11 +3,29 @@
 (def list-block 
   {:type "list_block"
    :message0 "( %1 %2 )"
-   :args0 [
-           {:type "input_dummy"}
+   :args0 [{:type "input_dummy"}
            {:type "input_statement"
-            :name "list-items"}
-   ]
-   :colour 230
-   :tooltop "list block yea"
-   :helpUrl ""})
+            :name "list-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour 230})
+
+(def vector-block 
+  {:type "vector_block"
+   :message0 "[ %1 %2 ]"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "vector-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour 230})
+
+(def map-block 
+  {:type "map_block"
+   :message0 "{ %1 %2 }"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "map-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour 230})

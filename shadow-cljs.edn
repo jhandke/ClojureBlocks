@@ -5,7 +5,7 @@
   "src/test"]
 
  :dependencies
- []
+ [[org.babashka/sci "0.7.39"]]
 
  :dev-http {8080 "public"}
  :builds

@@ -1,79 +1,66 @@
 (ns clojureblocks.core
   (:require ["blockly" :as blockly]
-            [clojureblocks.toolbox]
-            [clojureblocks.blocks.all]
-            [clojureblocks.generator.clojure]))
+            [clojure.string :as string]
+            [clojureblocks.blocks.all :as blocks]
+            [clojureblocks.evaluator.evaluate :as evaluator]
+            [clojureblocks.generator.clojure]
+            [clojureblocks.helper.resize :as resize]
+            [clojureblocks.serialization.serializer :as serialization]
+            [clojureblocks.toolbox]))
 
 (def workspace (atom nil))
 (def blockly-div (atom nil))
 (def blockly-area (atom nil))
 (def button-evaluate (atom nil))
 (def output-div (atom nil))
+(def generated-code (atom ""))
 
 (defn generate-code []
-  (println "click")
   (let [code (.workspaceToCode clojureblocks.generator.clojure/clojure-generator @workspace)]
-    (set! (.. @output-div -innerText) code)))
+    (set! (.. @output-div -innerText) code)
+    (reset! generated-code code)))
 
 (defn change-handler []
-  (println "something changed :o"))
+  (generate-code)
+  (serialization/save-workspace @workspace))
 
-(defn resize-handler []
-  (println "resizing")
-  (let [blockly-area (.getElementById js/document @blockly-area)
-        blockly-div (.getElementById js/document @blockly-div)]
-    (loop [element blockly-area
-           x 0
-           y 0]
-      (if element
-        (recur (.-offsetParent element)
-               (+ x (.-offsetLeft element))
-               (+ y (.-offsetTop element)))
-        (do
-          (set! (.-left (.-style blockly-div)) (str x "px"))
-          (set! (.-top (.-style blockly-div)) (str y "px"))
-          (set! (.-width (.-style blockly-div)) (str (.-offsetWidth blockly-area) "px"))
-          (set! (.-height (.-style blockly-div)) (str (.-offsetHeight blockly-area) "px"))
-          (.svgResize blockly @workspace))))))
+(defn resize []
+  (resize/resize-handler blockly-area blockly-div workspace))
 
 (defn init-workspace
   [div area toolbox handler]
   (reset! workspace
-          (.inject blockly div (clj->js (merge {:toolbox toolbox}))))
+          (.inject blockly div (clj->js  {:toolbox toolbox})))
   (reset! blockly-div div)
   (reset! blockly-area area)
-  (.addEventListener js/window "resize" resize-handler false)
-  (resize-handler)
+  (.addEventListener js/window "resize" resize false)
+  (resize)
   (. ^js/Object @workspace addChangeListener handler))
 
-(defn define-blocks
-  "Define new block types. Blockdefs is a seq of maps that are converted to JSON as per https://developers.google.com/blockly/guides/configure/web/custom-blocks"
-  [blocks]
-  ;; (. blockly (defineBlocksWithJsonArray blocks))
-  (.defineBlocksWithJsonArray blockly blocks))
 
-(def cbtoolbox 
-  (clj->js
-   {:kind "flyoutToolbox"
-    :contents [{:kind "block"
-                :type "add_block"}
-               {:kind "block"
-                :type "list_block"}
-               {:kind "block"
-                :type "number_block"}]}))
+(defn evaluate-code []
+  (set! (.. @output-div -innerText) 
+        (string/join "\n" 
+                     (map (fn [result-element]
+                            (println result-element)
+                            (str (get result-element :expression) " => " (get result-element :result)))
+                          (evaluator/split-and-evaluate @generated-code)))))
 
+(defn register-evaluate-button []
+  (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
+  (.addEventListener @button-evaluate "click" evaluate-code))
 
-(define-blocks (clj->js (clojureblocks.blocks.all/blocks)))
+(defn register-output-div []
+  (reset! output-div (.getElementById js/document "output")))
 
 (defn init []
-  (println "i am here :)") 
+  (blocks/define-blocks)
   (init-workspace
    "blockly-div"
    "blockly-area"
-   cbtoolbox
+   (clojureblocks.toolbox/generate-toolbox)
    change-handler)
 
-  (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
-  (.addEventListener @button-evaluate "click" generate-code)
-  (reset! output-div (.getElementById js/document "output"))
-  (println (.getAllBlocks ^js/Object @workspace)))
+  (serialization/load-workspace @workspace)
+  (register-evaluate-button)
+  (register-output-div))
