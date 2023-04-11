@@ -1,5 +1,6 @@
 .clj-kondo/
 .lsp
+.calva/
 
 node_modules/
 public/js
