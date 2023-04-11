@@ -1,0 +1,72 @@
+/* .blockly-div {
+    position: absolute;
+    height: 500px;
+    width: 800px;
+} */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(30, 30, 30);
+    overflow: hidden;
+}
+
+table {
+    height: 100%;
+    width: 100%;
+    border-spacing: 0;
+}
+
+#blockly-area {
+    height: 80%;
+    text-align: center;
+}
+
+#blockly-div {
+    position: absolute;
+}
+
+.output-td {
+    width: 85%;
+    background-color: black;
+    padding: 1em;
+    vertical-align: top;
+    text-align: left;
+}
+
+.control-td {
+    min-width: 10rem;
+    font-size: large;
+    color: white;
+    padding: 1em;
+    vertical-align: top;
+    text-align: left;
+}
+
+.control-td button {
+    background-color: #63b132;
+    color: white;
+    padding: 0.4em;
+    font-size: medium;
+    font-weight: bolder;
+    width: 100%;
+}
+
+.control-td .checkbox-div {
+    text-align: center;
+}
+
+.checkbox-div {
+    padding: 1em 0;
+    /* font-size: 1.2em; */
+}
+
+code {
+    font-size: large;
+    color: white;
+    font: Inconsolata, monospace;
+}
