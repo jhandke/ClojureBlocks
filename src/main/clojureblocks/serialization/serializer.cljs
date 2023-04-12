@@ -13,4 +13,5 @@
   (let [data (localstorage/get-item storageKey)]
     (when-not (nil? data)
       (let [parsedData (.parse js/JSON data)]
-        (.. blockly -serialization -workspaces (load parsedData workspace false))))))
+        (.. blockly -serialization -workspaces 
+            (load parsedData workspace false))))))

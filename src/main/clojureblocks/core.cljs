@@ -3,10 +3,10 @@
             [clojure.string :as string]
             [clojureblocks.blocks.all :as blocks]
             [clojureblocks.evaluator.evaluate :as evaluator]
-            [clojureblocks.generator.clojure]
+            [clojureblocks.generator.clojure :as generator]
             [clojureblocks.helper.resize :as resize]
             [clojureblocks.serialization.serializer :as serialization]
-            [clojureblocks.toolbox]))
+            [clojureblocks.toolbox :as toolbox]))
 
 (def workspace (atom nil))
 (def blockly-div (atom nil))
@@ -16,7 +16,9 @@
 (def generated-code (atom ""))
 
 (defn generate-code []
-  (let [code (.workspaceToCode clojureblocks.generator.clojure/clojure-generator @workspace)]
+  (let [code (.workspaceToCode
+              generator/clojure-generator
+              @workspace)]
     (set! (.. @output-div -innerText) code)
     (reset! generated-code code)))
 
@@ -49,7 +51,9 @@
         (string/join "\n" 
                      (map (fn [result-element]
                             (println result-element)
-                            (str (get result-element :expression) " => " (get result-element :result)))
+                            (str (get result-element :expression) 
+                                 " => " 
+                                 (get result-element :result)))
                           (evaluator/split-and-evaluate @generated-code)))))
 
 (defn register-evaluate-button []
@@ -64,7 +68,7 @@
   (init-workspace
    "blockly-div"
    "blockly-area"
-   (clojureblocks.toolbox/generate-toolbox)
+   (toolbox/generate-toolbox)
    change-handler
    blockly-options)
 
