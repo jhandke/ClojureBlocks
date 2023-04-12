@@ -38,8 +38,8 @@
   (. ^js/Object @workspace addChangeListener handler))
 
 
-(defn evaluate-code []
-  (set! (.. @output-div -innerText) 
+(defn evaluate-code-and-display []
+  (set! (.. @output-div -innerText)
         (string/join "\n" 
                      (map (fn [result-element]
                             (println result-element)
@@ -48,7 +48,7 @@
 
 (defn register-evaluate-button []
   (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
-  (.addEventListener @button-evaluate "click" evaluate-code))
+  (.addEventListener @button-evaluate "click" evaluate-code-and-display))
 
 (defn register-output-div []
   (reset! output-div (.getElementById js/document "output")))
