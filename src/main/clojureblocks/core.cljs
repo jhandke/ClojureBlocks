@@ -27,10 +27,16 @@
 (defn resize []
   (resize/resize-handler blockly-area blockly-div workspace))
 
+(def blockly-options
+  {:move {:scrollbars {:horizontal true
+                       :vertical true}
+          :drag true
+          :wheel false}})
+
 (defn init-workspace
-  [div area toolbox handler]
+  [div area toolbox handler options]
   (reset! workspace
-          (.inject blockly div (clj->js  {:toolbox toolbox})))
+          (.inject blockly div (clj->js  (merge {:toolbox toolbox} options))))
   (reset! blockly-div div)
   (reset! blockly-area area)
   (.addEventListener js/window "resize" resize false)
@@ -59,7 +65,8 @@
    "blockly-div"
    "blockly-area"
    (clojureblocks.toolbox/generate-toolbox)
-   change-handler)
+   change-handler
+   blockly-options)
 
   (serialization/load-workspace @workspace)
   (register-evaluate-button)
