@@ -1,9 +1,12 @@
 (ns clojureblocks.core
-  (:require ["blockly" :as blockly]
+  (:require ["@blockly/theme-dark" :default DarkTheme]
+            ["blockly" :as blockly]
             [clojure.string :as string]
             [clojureblocks.blocks.all :as blocks]
             [clojureblocks.evaluator.evaluate :as evaluator]
             [clojureblocks.generator.clojure :as generator]
+            [clojureblocks.helper.contextmenu :as contextmenu]
+            [clojureblocks.helper.modal-view :as modal-view]
             [clojureblocks.helper.resize :as resize]
             [clojureblocks.serialization.serializer :as serialization]
             [clojureblocks.toolbox :as toolbox]))
@@ -30,7 +33,8 @@
   (resize/resize-handler blockly-area blockly-div workspace))
 
 (def blockly-options
-  {:move {:scrollbars {:horizontal true
+  {:theme DarkTheme
+   :move {:scrollbars {:horizontal true
                        :vertical true}
           :drag true
           :wheel false}})
@@ -48,11 +52,11 @@
 
 (defn evaluate-code-and-display []
   (set! (.. @output-div -innerText)
-        (string/join "\n" 
+        (string/join "\n"
                      (map (fn [result-element]
                             (println result-element)
-                            (str (get result-element :expression) 
-                                 " => " 
+                            (str (get result-element :expression)
+                                 " => "
                                  (get result-element :result)))
                           (evaluator/split-and-evaluate @generated-code)))))
 
@@ -62,6 +66,7 @@
 
 (defn register-output-div []
   (reset! output-div (.getElementById js/document "output")))
+
 
 (defn init []
   (blocks/define-blocks)
@@ -73,5 +78,9 @@
    blockly-options)
 
   (serialization/load-workspace @workspace)
+
   (register-evaluate-button)
-  (register-output-div))
+  (register-output-div)
+
+  (modal-view/init @workspace)
+  (contextmenu/register-contextmenu))

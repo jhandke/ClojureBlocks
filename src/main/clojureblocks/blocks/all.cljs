@@ -1,8 +1,8 @@
 (ns clojureblocks.blocks.all
-  (:require
-   ["blockly" :as blockly]
-   [clojureblocks.blocks.seqs :as seqs]
-   [clojureblocks.blocks.literals :as literals]))
+  (:require ["blockly" :as blockly]
+            [clojureblocks.blocks.hof :as hof]
+            [clojureblocks.blocks.literals :as literals]
+            [clojureblocks.blocks.seqs :as seqs]))
 
 (defn blocks []
   (merge []
@@ -12,8 +12,8 @@
          literals/string-block
          literals/number-block
          literals/symbol-block
-         literals/keyword-block))
+         literals/keyword-block
+         hof/hof-map-block))
 
 (defn define-blocks []
-  ;; (. blockly (defineBlocksWithJsonArray blocks))
   (.defineBlocksWithJsonArray blockly (clj->js (blocks))))

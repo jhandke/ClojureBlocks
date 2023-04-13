@@ -20,7 +20,7 @@
    :nextStatement nil
    :colour 90})
 
-(def symbol-block 
+(def symbol-block
   {:type "symbol_block"
    :message0 "symbol %1"
    :args0 [{:type "field_input"

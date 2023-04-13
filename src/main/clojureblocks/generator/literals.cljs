@@ -1,5 +1,5 @@
 (ns clojureblocks.generator.literals
-  (:require ["blockly" :as blockly]) )
+  (:require ["blockly" :as blockly]))
 
 (defn generate-number-block [^blockly/Block block]
   (str (.getFieldValue block "number")))

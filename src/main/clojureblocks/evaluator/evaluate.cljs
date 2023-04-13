@@ -9,3 +9,5 @@
 (defn split-and-evaluate [code]
   (map format-results (string/split-lines code)))
 
+(defn evaluate-single [expression]
+  (format-results expression))
