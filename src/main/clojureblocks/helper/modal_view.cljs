@@ -1,11 +1,11 @@
 (ns clojureblocks.helper.modal-view
-  (:require ["/js/PreviewModal" :default PreviewModal]
+  (:require ["/js/PreviewModal.js" :default PreviewModal]
             [clojure.string :as string]))
 
 (def modal (atom nil))
 
 (defn init [workspace]
-  (swap! modal (fn [_] (new PreviewModal/PreviewModal "Block inspection" workspace))))
+  (swap! modal (fn [_] (new PreviewModal "Block inspection" workspace))))
 
 (defn display [content]
   (println modal)
