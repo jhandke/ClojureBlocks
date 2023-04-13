@@ -1,8 +1,7 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src/dev"
-  "src/main"
-  "src/test"]
+ ["src/main"
+  "src/extensions"]
 
  :dependencies
  [[org.babashka/sci "0.7.39"]]

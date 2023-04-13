@@ -1,5 +1,5 @@
 (ns clojureblocks.helper.modal-view
-  (:require ["/js-extensions/PreviewModal.js" :default PreviewModal]
+  (:require ["/extensions/PreviewModal.js" :default PreviewModal]
             [clojure.string :as string]))
 
 (def modal (atom nil))
