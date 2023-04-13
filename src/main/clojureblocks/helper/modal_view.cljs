@@ -5,8 +5,7 @@
 (def modal (atom nil))
 
 (defn init [workspace]
-  (println "we innit yea" workspace)
-  (swap! modal (fn [_] (new PreviewModal "Block inspection" workspace))))
+  (swap! modal (fn [_] (new PreviewModal/PreviewModal "Block inspection" workspace))))
 
 (defn display [content]
   (println modal)
