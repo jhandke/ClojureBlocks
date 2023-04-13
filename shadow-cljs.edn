@@ -1,7 +1,6 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src/main"
-  "src/extensions"]
+ ["src/main"]
 
  :dependencies
  [[org.babashka/sci "0.7.39"]]
@@ -10,4 +9,5 @@
  :builds
  {:clojureblocks
   {:target :browser
+   :compiler-options {:optimizations :simple} ;; needed for PreviewModal.js :(
    :modules {:main {:init-fn clojureblocks.core/init}}}}}
