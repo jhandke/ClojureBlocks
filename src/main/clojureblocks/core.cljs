@@ -55,19 +55,14 @@
   [code]
   (set! (.. @output-div -innerText) code))
 
-(defn clojureblocks-init []
+(defn clojureblocks-init 
+  "Main entrypoint. Initializes the application."
+  []
   (blockly-wrapper/define-blocks blocks/all-blocks)
-  (blockly-wrapper/init-workspace
-   "blockly-div"
-   "blockly-area"
-   (toolbox/generate-toolbox)
-   blockly-options
-   show-code)
-
-  (blockly-wrapper/load-workspace (serialization/load-workspace))
+  (blockly-wrapper/init-workspace (toolbox/generate-toolbox)
+                                  blockly-options
+                                  show-code)
 
   (register-evaluate-button)
   (register-output-div)
   (register-theme-switch))
-
-

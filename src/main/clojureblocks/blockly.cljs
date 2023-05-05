@@ -29,21 +29,22 @@
   (generate-code-and-display output-function)
   (serialization/save-workspace @workspace))
 
+(defn load-workspace [data]
+  (.. blockly -serialization -workspaces
+      (load data @workspace false)))
+
 (defn init-workspace
-  [blockly-div-id blockly-area-id toolbox options output-function]
+  [toolbox options output-function]
   (reset! workspace
-          (.inject blockly blockly-div-id (clj->js  (merge {:toolbox toolbox} options))))
-  (reset! blockly-div blockly-div-id)
-  (reset! blockly-area blockly-area-id)
+          (.inject blockly "blockly-div" (clj->js  (merge {:toolbox toolbox} options)))) 
+  (load-workspace (serialization/load-workspace))
+  (reset! blockly-div "blockly-div")
+  (reset! blockly-area "blockly-area")
   (.addEventListener js/window "resize" blockly-resize-handler false)
   (blockly-resize-handler)
   (. ^js/Object @workspace addChangeListener (fn [] (blockly-change-handler output-function)))
   (modal-view/init @workspace)
   (contextmenu/register-contextmenu))
-
-(defn load-workspace [data]
-  (.. blockly -serialization -workspaces
-      (load data @workspace false)))
 
 (defn define-blocks
   "Injects `blocks` into blockly."
