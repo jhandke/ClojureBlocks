@@ -18,12 +18,12 @@
 (defn blockly-resize-handler []
   (resize/resize-handler blockly-area blockly-div workspace))
 
-(defn generate-code-and-display [display]
+(defn generate-code-and-display [display-fn]
   (let [code (.workspaceToCode
               generator/clojure-generator
               @workspace)]
     (reset! generated-code code)
-    (display code)))
+    (display-fn code)))
 
 (defn blockly-change-handler [output-function]
   (generate-code-and-display output-function)
