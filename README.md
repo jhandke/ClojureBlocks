@@ -1,5 +1,4 @@
-# ClojureBlocks prototype
-(written in ClojureScript this time)
+# ClojureBlocks
 
 Create Clojure programs in your browser.
 
@@ -11,4 +10,4 @@ Evaluation is done by [sci](https://github.com/babashka/sci).
 1. `npm install`
 2. `npx shadow-cljs watch clojureblocks`
 
-or try it out in the browser: [ClojureBlocks live](https://jhandke.codeberg.page/clojureblocks-cljs/)
+or try out (an older version) in the browser: [ClojureBlocks live](https://jhandke.codeberg.page/clojureblocks-cljs/)
