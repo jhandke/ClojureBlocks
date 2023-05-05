@@ -6,15 +6,14 @@
 
 (defn map-hof-inspection
   [block]
-  (let [expression (get
-                    (evaluator/evaluate-single
-                     (str "'" (.blockToCode generator/clojure-generator block)))
-                    :result)
+  (let [code (.blockToCode generator/clojure-generator block)
+        expression (evaluator/evaluate-internal
+                    (str "'" code))
         pred (fnext expression)
         coll (last expression)
-        inspection-elements (get (evaluator/evaluate-single (str "(take " @number-previews " " coll ")")) :result)]
+        inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
     (map
      (fn [element]
-       (let [res (get (evaluator/evaluate-single (str "(" pred " " element ")")) :result)]
+       (let [res (evaluator/evaluate-internal (str "(" pred " " element ")")) ]
          (str "(" pred " " element ") => " res)))
      inspection-elements)))

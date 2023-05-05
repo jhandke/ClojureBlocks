@@ -25,7 +25,7 @@
    :message0 "symbol %1"
    :args0 [{:type "field_input"
             :name "symbol_name"
-            :text "name"}]
+            :text "x"}]
    :previousStatement nil
    :nextStatement nil
    :colour 315})
@@ -35,7 +35,7 @@
    :message0 "keyword %1"
    :args0 [{:type "field_input"
             :name "keyword_name"
-            :text "name"}]
+            :text "a"}]
    :previousStatement nil
    :nextStatement nil
    :colour 45})

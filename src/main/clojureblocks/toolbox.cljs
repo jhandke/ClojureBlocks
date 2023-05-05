@@ -2,6 +2,7 @@
   (:require [clojureblocks.blocks.all]))
 
 (def map-block-preset
+  "Block preset for map block with predicate and collection"
   {:kind "block"
    :type "hof_map_block"
    :inputs {:hof-map-function
@@ -16,12 +17,14 @@
                                        {:block {:type "number_block"
                                                 :fields {:number 10}}}}}}}}}})
 
-(defn generate-toolbox []
+(defn generate-toolbox 
+  "Generates the toolbox structure"
+  []
   (let [all-blocks (map
                     (fn [block]
                       (let [name (get block :type)]
                         {:kind "block"
                          :type name}))
-                    (clojureblocks.blocks.all/blocks))]
+                    clojureblocks.blocks.all/all-blocks)]
     {:kind "flyoutToolbox"
      :contents (conj (vec all-blocks) map-block-preset)}))

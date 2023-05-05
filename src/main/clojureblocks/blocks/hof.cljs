@@ -9,4 +9,4 @@
            {:type "input_statement"
             :name "hof-map-collection"
             :align "RIGHT"}]
-   :colour 180})
+   :colour 0})

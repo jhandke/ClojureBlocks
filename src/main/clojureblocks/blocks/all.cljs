@@ -1,19 +1,17 @@
 (ns clojureblocks.blocks.all
-  (:require ["blockly" :as blockly]
-            [clojureblocks.blocks.hof :as hof]
+  (:require [clojureblocks.blocks.hof :as hof]
             [clojureblocks.blocks.literals :as literals]
-            [clojureblocks.blocks.seqs :as seqs]))
+            [clojureblocks.blocks.seqs :as seqs]
+            [clojureblocks.blocks.function :as function]))
 
-(defn blocks []
-  (merge []
-         seqs/list-block
-         seqs/vector-block
-         seqs/map-block
-         literals/string-block
-         literals/number-block
-         literals/symbol-block
-         literals/keyword-block
-         hof/hof-map-block))
-
-(defn define-blocks []
-  (.defineBlocksWithJsonArray blockly (clj->js (blocks))))
+(def all-blocks
+  (vector function/defn-block
+          function/fn-call-block
+          seqs/list-block
+          seqs/vector-block
+          seqs/map-block
+          literals/string-block
+          literals/number-block
+          literals/symbol-block
+          literals/keyword-block
+          hof/hof-map-block))

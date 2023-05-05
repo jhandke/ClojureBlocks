@@ -1,54 +1,28 @@
 (ns clojureblocks.core
-  (:require ["@blockly/theme-dark" :default DarkTheme]
-            ["blockly" :as blockly]
-            [clojure.string :as string]
+  (:require [clojure.string :as string]
+            [clojureblocks.blockly :as blockly-wrapper]
             [clojureblocks.blocks.all :as blocks]
             [clojureblocks.evaluator.evaluate :as evaluator]
-            [clojureblocks.generator.clojure :as generator]
-            [clojureblocks.helper.contextmenu :as contextmenu]
-            [clojureblocks.helper.modal-view :as modal-view]
-            [clojureblocks.helper.resize :as resize]
             [clojureblocks.serialization.serializer :as serialization]
             [clojureblocks.toolbox :as toolbox]))
 
-(def workspace (atom nil))
-(def blockly-div (atom nil))
-(def blockly-area (atom nil))
+
 (def button-evaluate (atom nil))
 (def output-div (atom nil))
-(def generated-code (atom ""))
 
-(defn generate-code []
-  (let [code (.workspaceToCode
-              generator/clojure-generator
-              @workspace)]
-    (set! (.. @output-div -innerText) code)
-    (reset! generated-code code)))
+(def theme-switch (atom nil))
 
-(defn change-handler []
-  (generate-code)
-  (serialization/save-workspace @workspace))
-
-(defn resize []
-  (resize/resize-handler blockly-area blockly-div workspace))
+(defn handle-theme-switch [e]
+  (if (.. e -target -checked)
+    (blockly-wrapper/set-theme :dark)
+    (blockly-wrapper/set-theme :light)))
 
 (def blockly-options
-  {:theme DarkTheme
+  {:theme (blockly-wrapper/get-default-theme)
    :move {:scrollbars {:horizontal true
                        :vertical true}
           :drag true
           :wheel false}})
-
-(defn init-workspace
-  [div area toolbox handler options]
-  (reset! workspace
-          (.inject blockly div (clj->js  (merge {:toolbox toolbox} options))))
-  (reset! blockly-div div)
-  (reset! blockly-area area)
-  (.addEventListener js/window "resize" resize false)
-  (resize)
-  (. ^js/Object @workspace addChangeListener handler))
-
 
 (defn evaluate-code-and-display []
   (set! (.. @output-div -innerText)
@@ -58,7 +32,7 @@
                             (str (get result-element :expression)
                                  " => "
                                  (get result-element :result)))
-                          (evaluator/split-and-evaluate @generated-code)))))
+                          (evaluator/split-and-evaluate @blockly-wrapper/generated-code)))))
 
 (defn register-evaluate-button []
   (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
@@ -67,20 +41,33 @@
 (defn register-output-div []
   (reset! output-div (.getElementById js/document "output")))
 
+(defn register-theme-switch []
+  (reset! theme-switch (.getElementById js/document "checkbox-dark-theme"))
+  (.addEventListener @theme-switch "change" handle-theme-switch)
+  (let [saved-theme (serialization/load-theme)]
+    (when (= saved-theme :dark)
+      (set! (.. @theme-switch -checked) true))
+    (when (= saved-theme :light)
+      (set! (.. @theme-switch -checked) false))))
 
-(defn init []
-  (blocks/define-blocks)
-  (init-workspace
+(defn show-code
+  "Displays code in output-div"
+  [code]
+  (set! (.. @output-div -innerText) code))
+
+(defn clojureblocks-init []
+  (blockly-wrapper/define-blocks blocks/all-blocks)
+  (blockly-wrapper/init-workspace
    "blockly-div"
    "blockly-area"
    (toolbox/generate-toolbox)
-   change-handler
-   blockly-options)
+   blockly-options
+   show-code)
 
-  (serialization/load-workspace @workspace)
+  (blockly-wrapper/load-workspace (serialization/load-workspace))
 
   (register-evaluate-button)
   (register-output-div)
+  (register-theme-switch))
 
-  (modal-view/init @workspace)
-  (contextmenu/register-contextmenu))
+

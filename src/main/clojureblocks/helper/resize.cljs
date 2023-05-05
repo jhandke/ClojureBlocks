@@ -1,7 +1,9 @@
 (ns clojureblocks.helper.resize
   (:require ["blockly" :as blockly]))
 
-(defn resize-handler [blockly-area blockly-div workspace]
+(defn resize-handler 
+  "Resizes the `blockly-div` to fit into `blockly-area`."
+  [blockly-area blockly-div workspace]
   (let [blockly-area (.getElementById js/document @blockly-area)
         blockly-div (.getElementById js/document @blockly-div)]
     (loop [element blockly-area

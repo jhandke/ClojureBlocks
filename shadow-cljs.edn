@@ -10,4 +10,4 @@
  {:clojureblocks
   {:target :browser
    :compiler-options {:optimizations :simple} ;; needed for PreviewModal.js :(
-   :modules {:main {:init-fn clojureblocks.core/init}}}}}
+   :modules {:main {:init-fn clojureblocks.core/clojureblocks-init}}}}}

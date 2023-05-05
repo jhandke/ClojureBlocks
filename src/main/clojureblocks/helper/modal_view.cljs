@@ -8,7 +8,6 @@
   (swap! modal (fn [_] (new PreviewModal "Block inspection" workspace))))
 
 (defn display [content]
-  (println modal)
   (.init @modal content)
   (.show @modal))
 

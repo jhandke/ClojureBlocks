@@ -27,4 +27,3 @@
 (defn register-contextmenu []
   (.. ContextMenuRegistry -registry
       (register (clj->js hof-inspection-contextmenu-item))))
-

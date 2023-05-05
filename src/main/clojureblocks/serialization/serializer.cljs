@@ -3,15 +3,31 @@
             [clojureblocks.serialization.localstorage :as localstorage]
             [clojureblocks.serialization.serializer :as serialization]))
 
-(def storageKey "clojureblocks-ws")
+(def storage-key "clojureblocks-ws")
+(def theme-key "clojureblocks-theme")
 
-(defn save-workspace [workspace]
+(defn save-workspace 
+  "Saves the `workspace` to some storage"
+  [workspace]
   (let [data (.. blockly -serialization -workspaces (save workspace))]
-    (localstorage/set-item! storageKey (.stringify js/JSON data))))
+    (localstorage/set-item! storage-key (.stringify js/JSON data))))
 
-(defn load-workspace [workspace]
-  (let [data (localstorage/get-item storageKey)]
+(defn load-workspace 
+  "Loads the saved workspace"
+  [] 
+  (let [data (localstorage/get-item storage-key)]
     (when-not (nil? data)
-      (let [parsedData (.parse js/JSON data)]
-        (.. blockly -serialization -workspaces 
-            (load parsedData workspace false))))))
+      (.parse js/JSON data))))
+
+(defn save-theme
+  "Saves the theme `id` to some storage"
+  [id] 
+  (localstorage/set-item! theme-key (.stringify js/JSON id)))
+
+(defn load-theme
+  "Loads the theme id from storage"
+  []
+  (let [theme-id (localstorage/get-item theme-key)
+        parsed-id (.parse js/JSON theme-id)] 
+    (when-not (nil? parsed-id)
+      (get {":light" :light, ":dark" :dark} parsed-id :unreachable))))
