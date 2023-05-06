@@ -66,3 +66,8 @@
   (register-evaluate-button)
   (register-output-div)
   (register-theme-switch))
+
+(defn ^:dev/after-load reload 
+  "Reloads the entire page."
+  []
+  (.. js/window -location reload))
