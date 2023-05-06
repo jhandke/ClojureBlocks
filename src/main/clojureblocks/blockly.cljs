@@ -5,7 +5,9 @@
             [clojureblocks.helper.contextmenu :as contextmenu]
             [clojureblocks.helper.modal-view :as modal-view]
             [clojureblocks.helper.resize :as resize]
-            [clojureblocks.serialization.serializer :as serialization]))
+            [clojureblocks.serialization.serializer :as serialization]
+            [clojureblocks.toolbox :as toolbox]
+            [clojureblocks.blocks.all :as blocks]))
 
 (def workspace (atom nil))
 (def blockly-div (atom nil))
@@ -33,10 +35,16 @@
   (.. blockly -serialization -workspaces
       (load data @workspace false)))
 
+(defn define-blocks
+  "Injects `blocks` into blockly."
+  [blocks]
+  (.defineBlocksWithJsonArray blockly (clj->js  blocks)))
+
 (defn init-workspace
-  [toolbox options output-function]
+  [options output-function] 
+  (define-blocks blocks/all-blocks)
   (reset! workspace
-          (.inject blockly "blockly-div" (clj->js  (merge {:toolbox toolbox} options)))) 
+          (.inject blockly "blockly-div" (clj->js  (merge {:toolbox (toolbox/generate-toolbox)} options)))) 
   (load-workspace (serialization/load-workspace))
   (reset! blockly-div "blockly-div")
   (reset! blockly-area "blockly-area")
@@ -45,11 +53,6 @@
   (. ^js/Object @workspace addChangeListener (fn [] (blockly-change-handler output-function)))
   (modal-view/init @workspace)
   (contextmenu/register-contextmenu))
-
-(defn define-blocks
-  "Injects `blocks` into blockly."
-  [blocks]
-  (.defineBlocksWithJsonArray blockly (clj->js  blocks)))
 
 (defn get-default-theme
   "Returns default theme if no theme is saved."

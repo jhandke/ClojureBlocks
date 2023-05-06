@@ -1,10 +1,8 @@
 (ns clojureblocks.core
   (:require [clojure.string :as string]
             [clojureblocks.blockly :as blockly-wrapper]
-            [clojureblocks.blocks.all :as blocks]
             [clojureblocks.evaluator.evaluate :as evaluator]
-            [clojureblocks.serialization.serializer :as serialization]
-            [clojureblocks.toolbox :as toolbox]))
+            [clojureblocks.serialization.serializer :as serialization]))
 
 
 (def button-evaluate (atom nil))
@@ -58,9 +56,7 @@
 (defn clojureblocks-init 
   "Main entrypoint. Initializes the application."
   []
-  (blockly-wrapper/define-blocks blocks/all-blocks)
-  (blockly-wrapper/init-workspace (toolbox/generate-toolbox)
-                                  blockly-options
+  (blockly-wrapper/init-workspace blockly-options
                                   show-code)
 
   (register-evaluate-button)

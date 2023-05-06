@@ -1,7 +1,6 @@
 (ns clojureblocks.serialization.serializer
   (:require ["blockly" :as blockly]
-            [clojureblocks.serialization.localstorage :as localstorage]
-            [clojureblocks.serialization.serializer :as serialization]))
+            [clojureblocks.serialization.localstorage :as localstorage]))
 
 (def storage-key "clojureblocks-ws")
 (def theme-key "clojureblocks-theme")
