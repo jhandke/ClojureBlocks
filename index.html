@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>ClojureBlocks CLJS</title>
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <title>ClojureBlocks</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -28,11 +28,37 @@
                     <code id="output"></code>
                 </td>
                 <td class="control-td">
-                    <button type="button" id="button-evaluate-all">evaluate all</button><br />
-                    <div class="checkbox-div">
-                        <input type="checkbox" id="checkbox-auto-evaluate">
-                        <label for="auto-evaluate">auto evaluation (dangerous)</label>
-                    </div>
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="button button-wide button-evaluate"
+                                    id="button-evaluate-all">evaluate all</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="button button-reset" id="button-reset" disabled>reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="button button-import-export" id="button-import">Import</button>
+                            </td>
+                            <td>
+                                <button type="button" class="button button-import-export" id="button-export">Export</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="theme-switcher-container">
+                                <img src="img/sun-icon.svg" alt="Sun" class="theme-switcher-icon light" />
+                                <label class="switch">
+                                    <input type="checkbox" id="checkbox-dark-theme" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <img src="img/moon-icon.svg" alt="Moon" class="theme-switcher-icon dark" />
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
