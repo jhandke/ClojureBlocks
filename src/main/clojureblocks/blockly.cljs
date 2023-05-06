@@ -67,3 +67,6 @@
   [theme]
   (.. ^js/Object @workspace -themeManager_ (setTheme (themes theme)))
   (serialization/save-theme (str theme)))
+
+(defn export-workspace []
+  (serialization/serialize @workspace))
