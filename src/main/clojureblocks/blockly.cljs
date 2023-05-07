@@ -1,16 +1,16 @@
 (ns clojureblocks.blockly
   (:require ["@blockly/theme-dark" :default DarkTheme]
             ["blockly" :as blockly]
+            [clojureblocks.blocks.all :as blocks]
             [clojureblocks.generator.clojure :as generator]
             [clojureblocks.helper.contextmenu :as contextmenu]
             [clojureblocks.helper.modal-view :as modal-view]
             [clojureblocks.serialization.serializer :as serialization]
-            [clojureblocks.toolbox :as toolbox]
-            [clojureblocks.blocks.all :as blocks]))
+            [clojureblocks.toolbox :as toolbox]))
 
 (def workspace (atom nil))
-(def blockly-div (atom nil))
-(def blockly-area (atom nil))
+(def blockly-div-id "blockly-div")
+(def blockly-area-id "blockly-area")
 (def generated-code (atom ""))
 
 (def themes {:light (.. blockly -Themes -Classic)
@@ -19,8 +19,8 @@
 (defn resize-handler
   "Resizes the `blockly-div` to fit into `blockly-area`."
   []
-  (let [blockly-area (.getElementById js/document @blockly-area)
-        blockly-div (.getElementById js/document @blockly-div)]
+  (let [blockly-area (.getElementById js/document blockly-area-id)
+        blockly-div (.getElementById js/document blockly-div-id)]
     (loop [element blockly-area
            x 0
            y 0]
@@ -55,14 +55,21 @@
   [blocks]
   (.defineBlocksWithJsonArray blockly (clj->js  blocks)))
 
+(defn reset-workspace
+  "Resets the blockly workspace."
+  [options persist]
+  (let [blockly-div (.getElementById js/document blockly-div-id)]
+    (.replaceChildren blockly-div)
+    (reset! workspace
+            (.inject blockly "blockly-div" (clj->js (merge {:toolbox (toolbox/generate-toolbox)} options))))
+    (when persist
+      (serialization/save-workspace @workspace))))
+
 (defn init-workspace
-  [options output-function] 
+  [options output-function]
   (define-blocks blocks/all-blocks)
-  (reset! workspace
-          (.inject blockly "blockly-div" (clj->js  (merge {:toolbox (toolbox/generate-toolbox)} options)))) 
+  (reset-workspace options false)
   (load-workspace (serialization/load-workspace))
-  (reset! blockly-div "blockly-div")
-  (reset! blockly-area "blockly-area")
   (.addEventListener js/window "resize" resize-handler false)
   (resize-handler)
   (. ^js/Object @workspace addChangeListener (fn [] (blockly-change-handler output-function)))
