@@ -4,7 +4,6 @@
             [clojureblocks.generator.clojure :as generator]
             [clojureblocks.helper.contextmenu :as contextmenu]
             [clojureblocks.helper.modal-view :as modal-view]
-            [clojureblocks.helper.resize :as resize]
             [clojureblocks.serialization.serializer :as serialization]
             [clojureblocks.toolbox :as toolbox]
             [clojureblocks.blocks.all :as blocks]))
@@ -17,8 +16,24 @@
 (def themes {:light (.. blockly -Themes -Classic)
              :dark DarkTheme})
 
-(defn blockly-resize-handler []
-  (resize/resize-handler blockly-area blockly-div workspace))
+(defn resize-handler
+  "Resizes the `blockly-div` to fit into `blockly-area`."
+  []
+  (let [blockly-area (.getElementById js/document @blockly-area)
+        blockly-div (.getElementById js/document @blockly-div)]
+    (loop [element blockly-area
+           x 0
+           y 0]
+      (if element
+        (recur (.-offsetParent element)
+               (+ x (.-offsetLeft element))
+               (+ y (.-offsetTop element)))
+        (do
+          (set! (.-left (.-style blockly-div)) (str x "px"))
+          (set! (.-top (.-style blockly-div)) (str y "px"))
+          (set! (.-width (.-style blockly-div)) (str (.-offsetWidth blockly-area) "px"))
+          (set! (.-height (.-style blockly-div)) (str (.-offsetHeight blockly-area) "px"))
+          (.svgResize blockly @workspace))))))
 
 (defn generate-code-and-display [display-fn]
   (let [code (.workspaceToCode
@@ -48,8 +63,8 @@
   (load-workspace (serialization/load-workspace))
   (reset! blockly-div "blockly-div")
   (reset! blockly-area "blockly-area")
-  (.addEventListener js/window "resize" blockly-resize-handler false)
-  (blockly-resize-handler)
+  (.addEventListener js/window "resize" resize-handler false)
+  (resize-handler)
   (. ^js/Object @workspace addChangeListener (fn [] (blockly-change-handler output-function)))
   (modal-view/init @workspace)
   (contextmenu/register-contextmenu))
