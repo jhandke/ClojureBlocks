@@ -6,14 +6,14 @@
 (def clojure-generator (blockly/Generator. "clojure"))
 
 (defn generate-statement-code
-  "Generates the code from `block`'s child block with the name `identifier`."
+  "Generates the code from `block`'s statement input with the name `identifier`."
   [block identifier]
-  (loop [child (.getInputTargetBlock ^js/blockly.Block block identifier)
+  (loop [child (.getInputTargetBlock ^blockly/Block block identifier)
          statements []]
     (if child
       (let [statement (.blockToCode clojure-generator child)]
         (recur
-         (.getNextBlock ^js/blockly.Block child)
+         (.getNextBlock ^blockly/Block child)
          (conj statements statement)))
       statements)))
 
@@ -71,7 +71,7 @@
   (let [arguments (generate-statement-code block "function_arguments")]
     (str "("
          (.getFieldValue block "function_name")
-         (if (= 0 (count arguments))
+         (if (empty? arguments)
            ")"
            (str " " (string/join " " arguments) ")")))))
 
