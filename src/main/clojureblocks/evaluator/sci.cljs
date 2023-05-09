@@ -16,6 +16,18 @@
     {:expression expression
      :result (sci/eval-string* @sci-context (add-pr-str expression))}))
 
+(defn evaluate-with-error 
+  "Evaluates a single `expression` and return error."
+  [expression]
+  (sci/binding [sci/print-length 12]
+    (try 
+      (hash-map :expression expression
+                :result (sci/eval-string* @sci-context (add-pr-str expression)))
+      (catch js/Error e 
+        (hash-map :expression expression
+                  :error (. e -message)))
+      )))
+
 (defn evaluate-inspection
   "Evaluates a single `expression` for internal use."
   [expression]

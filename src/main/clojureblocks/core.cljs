@@ -49,7 +49,9 @@
                             (println result-element)
                             (str (get result-element :expression)
                                  " => "
-                                 (get result-element :result)))
+                                 (if (get result-element :error)
+                                   (get result-element :error)
+                                   (get result-element :result))))
                           (evaluator/split-and-evaluate @blockly-wrapper/generated-code)))))
 
 (defn register-io []
