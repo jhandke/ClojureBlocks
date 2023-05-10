@@ -4,7 +4,7 @@
 (def sci-options {})
 (def sci-context (atom (sci/init sci-options)))
 
-(defn add-pr-str 
+(defn emulate-print 
   "Surrounds `expression` with (pr-str ...) for print-like behaivour."
   [expression] 
   (str "(pr-str " expression ")"))
@@ -14,7 +14,7 @@
   [expression] 
   (sci/binding [sci/print-length 12]
     {:expression expression
-     :result (sci/eval-string* @sci-context (add-pr-str expression))}))
+     :result (sci/eval-string* @sci-context (emulate-print expression))}))
 
 (defn evaluate-with-error 
   "Evaluates a single `expression` and return error."
@@ -22,7 +22,7 @@
   (sci/binding [sci/print-length 12]
     (try 
       (hash-map :expression expression
-                :result (sci/eval-string* @sci-context (add-pr-str expression)))
+                :result (sci/eval-string* @sci-context (emulate-print expression)))
       (catch js/Error e 
         (hash-map :expression expression
                   :error (. e -message)))
