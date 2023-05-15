@@ -47,8 +47,9 @@
   (serialization/save-workspace @workspace))
 
 (defn load-workspace [data]
-  (.. blockly -serialization -workspaces
-      (load data @workspace false)))
+  (when data
+    (.. blockly -serialization -workspaces
+        (load data @workspace false))))
 
 (defn define-blocks
   "Injects `blocks` into blockly."
