@@ -29,3 +29,8 @@
    :previousStatement nil
    :nextStatement nil
    :colour 230})
+
+(def all
+  [list-block
+   vector-block
+   map-block])

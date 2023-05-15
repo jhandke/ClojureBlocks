@@ -39,3 +39,9 @@
    :previousStatement nil
    :nextStatement nil
    :colour 45})
+
+(def all
+  [string-block
+   number-block
+   symbol-block
+   keyword-block])

@@ -10,3 +10,6 @@
             :name "hof-map-collection"
             :align "RIGHT"}]
    :colour 0})
+
+(def all
+  [hof-map-block])

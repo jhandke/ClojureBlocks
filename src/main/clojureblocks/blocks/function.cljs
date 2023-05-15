@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.function)
 
-(def defn-block 
+(def defn-block
   {:type "defn_block"
    :message0 "(defn %1 %2 args [ %3 ] %4 body %5)"
    :args0 [{:type "field_input"
@@ -31,3 +31,7 @@
    :nextStatement nil
    :colour 180
    :tooltip "Calls a function with the given arguments."})
+
+(def all
+  [defn-block
+   fn-call-block])
