@@ -1,7 +1,6 @@
-(ns clojureblocks.generator.clojure
+(ns clojureblocks.generator
   (:require ["blockly" :as blockly]
-            [clojure.string :as string]
-            [clojureblocks.generator.literals :as literals]))
+            [clojure.string :as string]))
 
 (def clojure-generator (blockly/Generator. "clojure"))
 
@@ -16,6 +15,27 @@
          (.getNextBlock ^blockly/Block child)
          (conj statements statement)))
       statements)))
+
+
+(defn generate-number-block
+  "Returns the field value for number input."
+  [^blockly/Block block]
+  (str (.getFieldValue block "number")))
+
+(defn generate-symbol-block
+  "Returns the field value for symbol name input."
+  [^blockly/Block block]
+  (str (.getFieldValue block "symbol_name")))
+
+(defn generate-string-block
+  "Returns the formatted value for string input."
+  [^blockly/Block block]
+  (str "\"" (.getFieldValue block "string_text") "\""))
+
+(defn generate-keyword-block
+  "Returns the formatted value for keyword name input."
+  [^blockly/Block block]
+  (str ":" (.getFieldValue block "keyword_name")))
 
 (defn generate-list-block
   "Generates the code for a list block: `(e1 e2 ...)`."
@@ -100,10 +120,10 @@
          (string/join " " body)
          ")")))
 
-(set! (.. clojure-generator -number-block) literals/generate-number-block)
-(set! (.. clojure-generator -string-block) literals/generate-string-block)
-(set! (.. clojure-generator -keyword-block) literals/generate-keyword-block)
-(set! (.. clojure-generator -symbol-block) literals/generate-symbol-block)
+(set! (.. clojure-generator -number-block) generate-number-block)
+(set! (.. clojure-generator -string-block) generate-string-block)
+(set! (.. clojure-generator -keyword-block) generate-keyword-block)
+(set! (.. clojure-generator -symbol-block) generate-symbol-block)
 (set! (.. clojure-generator -list-block) generate-list-block)
 (set! (.. clojure-generator -vector-block) generate-vector-block)
 (set! (.. clojure-generator -map-block) generate-map-block)

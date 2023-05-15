@@ -2,7 +2,7 @@
   (:require ["@blockly/theme-dark" :default DarkTheme]
             ["blockly" :as blockly]
             [clojureblocks.blocks.all :as blocks]
-            [clojureblocks.generator.clojure :as generator]
+            [clojureblocks.generator :as generator]
             [clojureblocks.helper.contextmenu :as contextmenu]
             [clojureblocks.helper.modal-view :as modal-view]
             [clojureblocks.serialization.serializer :as serialization]

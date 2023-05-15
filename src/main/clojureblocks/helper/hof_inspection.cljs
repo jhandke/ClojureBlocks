@@ -1,6 +1,6 @@
 (ns clojureblocks.helper.hof-inspection
   (:require [clojureblocks.evaluator.evaluate :as evaluator]
-            [clojureblocks.generator.clojure :as generator]))
+            [clojureblocks.generator :as generator]))
 
 (def number-previews (atom 5))
 
@@ -14,6 +14,6 @@
         inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
     (map
      (fn [element]
-       (let [res (evaluator/evaluate-internal (str "(" pred " " element ")")) ]
+       (let [res (evaluator/evaluate-internal (str "(" pred " " element ")"))]
          (str "(" pred " " element ") => " res)))
      inspection-elements)))
