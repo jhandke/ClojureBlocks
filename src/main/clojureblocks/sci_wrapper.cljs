@@ -1,4 +1,4 @@
-(ns clojureblocks.evaluator.sci
+(ns clojureblocks.sci-wrapper
   (:require [sci.core :as sci]))
 
 (def sci-options {})

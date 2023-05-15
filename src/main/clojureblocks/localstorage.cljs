@@ -1,4 +1,6 @@
-(ns clojureblocks.serialization.localstorage)
+(ns clojureblocks.localstorage)
+
+(comment "Code stolen from https://gist.github.com/daveliepmann/cf923140702c8b1de301")
 
 (defn set-item!
   "Set `key` in browser's localStorage to `val`."

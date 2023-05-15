@@ -1,5 +1,5 @@
-(ns clojureblocks.helper.hof-inspection
-  (:require [clojureblocks.evaluator.evaluate :as evaluator]
+(ns clojureblocks.hof-inspection
+  (:require [clojureblocks.evaluator :as evaluator]
             [clojureblocks.generator :as generator]))
 
 (def number-previews (atom 5))

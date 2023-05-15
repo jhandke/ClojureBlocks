@@ -1,4 +1,4 @@
-(ns clojureblocks.helper.modal-view
+(ns clojureblocks.modal-view
   (:require ["/js/PreviewModal.js" :default PreviewModal]
             [clojure.string :as string]))
 

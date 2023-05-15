@@ -1,9 +1,9 @@
 (ns clojureblocks.core
   (:require [clojure.string :as string]
-            [clojureblocks.blockly :as blockly-wrapper]
-            [clojureblocks.evaluator.evaluate :as evaluator]
+            [clojureblocks.blockly-wrapper :as blockly-wrapper]
+            [clojureblocks.evaluator :as evaluator]
             [clojureblocks.import-export :as import-export]
-            [clojureblocks.serialization.serializer :as serialization]))
+            [clojureblocks.serialization :as serialization]))
 
 
 (def output-div (atom nil))

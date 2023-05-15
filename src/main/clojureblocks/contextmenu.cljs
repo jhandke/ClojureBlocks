@@ -1,7 +1,7 @@
-(ns clojureblocks.helper.contextmenu
+(ns clojureblocks.contextmenu
   (:require ["blockly" :refer (ContextMenuRegistry)]
-            [clojureblocks.helper.hof-inspection :as inspection]
-            [clojureblocks.helper.modal-view :as modal-view]))
+            [clojureblocks.hof-inspection :as inspection]
+            [clojureblocks.modal-view :as modal-view]))
 
 (defn block-inspection [scope]
   (cond ;; multimethods!!!

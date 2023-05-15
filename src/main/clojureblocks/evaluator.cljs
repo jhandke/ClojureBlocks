@@ -1,6 +1,6 @@
-(ns clojureblocks.evaluator.evaluate
+(ns clojureblocks.evaluator
   (:require [clojure.string :as string]
-            [clojureblocks.evaluator.sci :as sci]))
+            [clojureblocks.sci-wrapper :as sci]))
 
 (defn split-and-evaluate
   "Splits `code` into lines and returns formatted evaluation results"
