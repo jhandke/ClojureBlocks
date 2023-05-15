@@ -1,5 +1,6 @@
 (ns clojureblocks.toolbox
-  (:require [clojureblocks.blocks.function :as function]
+  (:require [clojureblocks.blocks.control :as control]
+            [clojureblocks.blocks.function :as function]
             [clojureblocks.blocks.hof :as hof]
             [clojureblocks.blocks.literals :as literals]
             [clojureblocks.blocks.seqs :as seqs]))
@@ -39,6 +40,9 @@
               {:kind "category"
                :name "Seqs"
                :contents (map block-to-toolbox seqs/all)}
+              {:kind "category"
+               :name "Control"
+               :contents (map block-to-toolbox control/all)}
               {:kind "category"
                :name "HOF"
                :contents (conj (map block-to-toolbox hof/all) map-block-preset)}]})
