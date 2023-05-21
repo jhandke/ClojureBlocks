@@ -1,12 +1,12 @@
 (ns clojureblocks.hof-inspection
   (:require [clojureblocks.evaluator :as evaluator]
-            [clojureblocks.generator :as generator]))
+            [clojureblocks.generator.generator :as generator]))
 
 (def number-previews (atom 5))
 
 (defn map-hof-inspection
   [block]
-  (let [code (.blockToCode generator/clojure-generator block)
+  (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
                     (str "'" code))
         pred (fnext expression)

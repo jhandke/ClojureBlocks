@@ -2,7 +2,7 @@
   (:require ["@blockly/theme-dark" :default DarkTheme]
             ["blockly" :as blockly]
             [clojureblocks.blocks.all :as blocks]
-            [clojureblocks.generator :as generator]
+            [clojureblocks.generator.generator :as generator]
             [clojureblocks.contextmenu :as contextmenu]
             [clojureblocks.modal-view :as modal-view]
             [clojureblocks.serialization :as serialization]
@@ -37,7 +37,7 @@
 
 (defn generate-code-and-display [display-fn]
   (let [code (.workspaceToCode
-              generator/clojure-generator
+              generator/generator
               @workspace)]
     (reset! generated-code code)
     (display-fn code)))
