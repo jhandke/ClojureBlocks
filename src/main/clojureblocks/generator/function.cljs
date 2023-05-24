@@ -1,6 +1,5 @@
 (ns clojureblocks.generator.function
   (:require ["blockly" :as blockly]
-            [clojure.string :as string]
             [clojureblocks.generator.clojure :as generator]))
 
 (defn generate-defn-block
