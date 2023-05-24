@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.control)
 
+(def colour 315)
+
 (def if-block
   {:type "if_block"
    :message0 "if %1 then %2 else %3"
@@ -11,7 +13,7 @@
             :name "else"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 315
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/if"})
 
 (def when-block
@@ -23,7 +25,7 @@
             :name "body"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 315
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/when"})
 
 (def all

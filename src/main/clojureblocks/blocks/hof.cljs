@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.hof)
 
+(def colour 1)
+
 (def hof-map-block
   {:type "hof_map_block"
    :message0 "(map fn %1 seq %2 )"
@@ -11,7 +13,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 0
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/map"})
 
 (def hof-filter-block
@@ -26,7 +28,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 0
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/filter"})
 
 (def hof-reduce-block
@@ -41,7 +43,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 0
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/reduce"})
 
 (def hof-partial-block
@@ -56,7 +58,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 0
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/partial"})
 
 (def hof-apply-block
@@ -71,7 +73,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 0
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/apply"})
 
 (def hof-juxt-block
@@ -86,7 +88,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 0
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/juxt"})
 
 (def all

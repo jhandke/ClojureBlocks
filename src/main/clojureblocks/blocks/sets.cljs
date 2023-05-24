@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.sets)
 
+(def colour 330)
+
 (def union-block
   {:type "union_block"
    :message0 "(union %1 s1 %2 s2 %3)"
@@ -12,7 +14,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 330
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.set/union"})
 
 (def intersection-block
@@ -27,7 +29,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 330
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.set/intersection"})
 
 (def difference-block
@@ -42,7 +44,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 330
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.set/difference"})
 
 

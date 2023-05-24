@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.maps)
 
+(def colour 180)
+
 (def assoc-block
   {:type "assoc_block"
    :message0 "(assoc %1 map %2 key %3 value %4)"
@@ -15,7 +17,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 180
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/assoc"})
 
 (def dissoc-block
@@ -30,7 +32,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 180
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/dissoc"})
 
 (def get-block
@@ -48,7 +50,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 180
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/get"})
 
 (def all 

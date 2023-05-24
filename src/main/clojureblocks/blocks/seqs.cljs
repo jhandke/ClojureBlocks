@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.seqs)
 
+(def colour 230)
+
 (def list-block
   {:type "list_block"
    :message0 "( %1 %2 )"
@@ -8,7 +10,7 @@
             :name "list-items"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230})
+   :colour colour})
 
 (def vector-block
   {:type "vector_block"
@@ -18,7 +20,7 @@
             :name "vector-items"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230})
+   :colour colour})
 
 (def map-block
   {:type "map_block"
@@ -28,7 +30,7 @@
             :name "map-items"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230})
+   :colour colour})
 
 
 
@@ -41,7 +43,7 @@
             :align "RIGHT"}],
    :previousStatement nil,
    :nextStatement nil,
-   :colour 230,
+   :colour colour,
    :helpUrl "https://clojuredocs.org/clojure.core/count"})
 
 (def empty-q-block 
@@ -53,7 +55,7 @@
             :align "RIGHT"}],
    :previousStatement nil,
    :nextStatement nil,
-   :colour 230,
+   :colour colour,
    :helpUrl "https://clojuredocs.org/clojure.core/empty_q"})
 
 (def cons-block
@@ -68,7 +70,7 @@
             :align "RIGHT"}],
    :previousStatement nil,
    :nextStatement nil,
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/cons"})
 
 (def conj-block
@@ -83,7 +85,7 @@
             :align "RIGHT"}],
    :previousStatement nil,
    :nextStatement nil,
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/conj"})
 
 (def top-blocks
@@ -104,7 +106,7 @@
             :align "RIGHT"}],
    :previousStatement nil,
    :nextStatement nil,
-   :colour 230,
+   :colour colour,
    :helpUrl "https://clojuredocs.org/clojure.core/first"})
 
 (def rest-block
@@ -116,7 +118,7 @@
             :align "RIGHT"}],
    :previousStatement nil,
    :nextStatement nil,
-   :colour 230,
+   :colour colour,
    :helpUrl "https://clojuredocs.org/clojure.core/rest"})
 
 (def take-block
@@ -131,7 +133,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/take"})
 
 (def drop-block
@@ -146,7 +148,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/drop"})
 
 (def take-while-block
@@ -161,7 +163,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/take-while"})
 
 (def drop-while-block
@@ -176,7 +178,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/drop-while"})
 
 (def concat-block 
@@ -188,7 +190,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/concat"})
 
 (def access-blocks
@@ -209,7 +211,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/sort"})
 
 (def sort-by-block
@@ -224,7 +226,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/sort-by"})
 
 (def shuffle-block
@@ -236,7 +238,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/shuffle"})
 
 (def reverse-block
@@ -248,7 +250,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 230
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/reverse"})
 
 (def order-blocks 

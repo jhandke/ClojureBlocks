@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.function)
 
+(def colour 45)
+
 (def defn-block
   {:type "defn_block"
    :message0 "(defn %1 %2 args [ %3 ] %4 body %5)"
@@ -13,7 +15,7 @@
             :align "RIGHT"}
            {:type "input_statement"
             :name "function_body"}]
-   :colour 45
+   :colour colour
    :tooltip "Defines a function. Short for (def my-fn (fn args body))."
    :helpUrl "https://clojuredocs.org/clojure.core/defn"})
 
@@ -29,7 +31,7 @@
             :name "function_arguments"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 180
+   :colour colour
    :tooltip "Calls a function with the given arguments."})
 
 (def all

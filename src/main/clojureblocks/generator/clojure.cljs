@@ -1,5 +1,6 @@
 (ns clojureblocks.generator.clojure
-  (:require ["blockly" :as blockly]))
+  (:require ["blockly" :as blockly]
+            [clojure.string :as string]))
 
 (def clojure-generator (blockly/Generator. "clojure"))
 
@@ -13,5 +14,5 @@
         (recur
          (.getNextBlock ^blockly/Block child)
          (conj statements statement)))
-      statements)))
+      (string/join " " statements))))
 

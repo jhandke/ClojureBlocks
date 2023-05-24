@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.concurrency)
 
+(def colour 60)
+
 (def atom-block
   {:type "atom_block"
    :message0 "(atom %1 value %2)"
@@ -9,7 +11,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 60
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/atom"})
 
 (def agent-block 
@@ -21,7 +23,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 60
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/agent"})
 
 (def ref-block
@@ -33,7 +35,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 60
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/ref"})
 
 (def all 

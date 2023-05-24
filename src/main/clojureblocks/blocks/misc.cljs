@@ -1,5 +1,7 @@
 (ns clojureblocks.blocks.misc)
 
+(def colour 150)
+
 (def frequencies-block
   {:type "frequencies_block"
    :message0 "(frequencies %1 coll %2)"
@@ -9,7 +11,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/frequencies"})
 
 (def partition-block
@@ -27,7 +29,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/partition"})
 
 (def partition-by-block
@@ -42,7 +44,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/partition-by"})
 
 (def group-by-block
@@ -57,7 +59,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/group-by"})
 
 (def distinct-block
@@ -69,7 +71,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/distinct"})
 
 (def dedupe-block
@@ -81,7 +83,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/dedupe"})
 
 (def interleave-block
@@ -96,7 +98,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/interleave"})
 
 (def interpose-block
@@ -111,7 +113,7 @@
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 150
+   :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/interpose"})
 
 
