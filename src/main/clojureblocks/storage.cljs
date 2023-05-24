@@ -1,4 +1,4 @@
-(ns clojureblocks.localstorage)
+(ns clojureblocks.storage)
 
 (comment "Code stolen from https://gist.github.com/daveliepmann/cf923140702c8b1de301")
 
