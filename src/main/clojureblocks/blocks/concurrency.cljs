@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.concurrency)
 
-(def colour 60)
+(def colour "#FF0000")
 
 (def atom-block
   {:type "atom_block"

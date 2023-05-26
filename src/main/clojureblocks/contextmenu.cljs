@@ -6,11 +6,17 @@
 (defn block-inspection [scope]
   (cond ;; multimethods!!!
     (= "hof_map_block" (.. scope -block -type))
-    (modal-view/display-lines (inspection/map-hof-inspection (. scope -block)))))
+    (modal-view/display-lines (inspection/map-inspection (. scope -block)))
+    
+    (= "hof_reduce_block" (.. scope -block -type))
+    (modal-view/display-lines (inspection/reduce-inspection (. scope -block)))
+    
+    (= "hof_filter_block" (.. scope -block -type))
+    (modal-view/display-lines (inspection/filter-inspection (. scope -block)))))
 
 (defn precondition [scope]
   (cond
-    (= "hof_map_block" (.. scope -block -type))
+    (or (= "hof_map_block" (.. scope -block -type)) (= "hof_reduce_block" (.. scope -block -type)) (= "hof_filter_block" (.. scope -block -type)))
     "enabled"
     :else
     "disabled"))
