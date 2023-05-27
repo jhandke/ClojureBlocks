@@ -42,8 +42,41 @@
    :nextStatement nil
    :colour colour})
 
+(def list-block
+  {:type "list_block"
+   :message0 "( %1 %2 )"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "list-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour})
+
+(def vector-block
+  {:type "vector_block"
+   :message0 "[ %1 %2 ]"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "vector-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour})
+
+(def map-block
+  {:type "map_block"
+   :message0 "{ %1 %2 }"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "map-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour})
+
 (def all
   [string-block
    number-block
    symbol-block
-   keyword-block])
+   keyword-block
+   list-block
+   vector-block
+   map-block])

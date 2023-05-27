@@ -1,24 +1,6 @@
 (ns clojureblocks.generator.seqs
   (:require [clojureblocks.generator.clojure :as generator]))
 
-(defn generate-list-block
-  "Generates the code for a list block: `(e1 e2 ...)`."
-  [block]
-  (let [items (generator/generate-statement-code block "list-items")]
-    (str "(" items ")")))
-
-(defn generate-vector-block
-  "Generates the code for a vector block: `[e1 e2 ...]`."
-  [block]
-  (let [items (generator/generate-statement-code block "vector-items")]
-    (str "[" items "]")))
-
-(defn generate-map-block
-  "Generates the code for a map block: `{:a 1 :b 42 ...}`."
-  [block]
-  (let [items (generator/generate-statement-code block "map-items")]
-    (str "{" items "}")))
-
 (defn generate-count-block
   "Generates the code for a count block: `(count coll)`"
   [block]
@@ -41,6 +23,13 @@
   (let [collection (generator/generate-statement-code block "collection")
         element (generator/generate-statement-code block "element")]
     (str "(conj " collection " " element ")")))
+
+(defn generate-into-block
+  [block]
+  (let [destination (generator/generate-statement-code block "destination")
+        source (generator/generate-statement-code block "source")]
+    (str "(into " destination " " source ")")))
+
 
 (defn generate-first-block
   [block]
