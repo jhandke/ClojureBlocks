@@ -46,6 +46,8 @@
 
 (set! (.. clojuregenerator/clojure-generator -defn-block) function/generate-defn-block)
 (set! (.. clojuregenerator/clojure-generator -fn-call-block) function/generate-fn-call-block)
+(set! (.. clojuregenerator/clojure-generator -fn-block) function/generate-fn-block)
+(set! (.. clojuregenerator/clojure-generator -def-block) function/generate-def-block)
 
 (set! (.. clojuregenerator/clojure-generator -if-block) control/generate-if-block)
 (set! (.. clojuregenerator/clojure-generator -when-block) control/generate-when-block)

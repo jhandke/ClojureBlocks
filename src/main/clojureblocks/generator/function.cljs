@@ -19,3 +19,15 @@
          (when-not (empty? function-arguments)
            (str " " function-arguments))
          ")")))
+
+(defn generate-fn-block
+  [block]
+  (let [args (generator/generate-statement-code block "args")
+        body (generator/generate-statement-code block "body")]
+    (str "(fn [" args "] " body ")")))
+
+(defn generate-def-block
+  [^blockly/Block block]
+  (let [name (.getFieldValue block "symbol_name")
+        value (generator/generate-statement-code block "value")]
+    (str "(def " name " " value ")")))
