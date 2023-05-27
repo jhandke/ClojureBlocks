@@ -10,4 +10,4 @@ Evaluation is done by [sci](https://github.com/babashka/sci).
 1. `npm install`
 2. `npx shadow-cljs watch clojureblocks`
 
-or try it out in your browser: [ClojureBlocks live](https://jhandke.codeberg.page/clojureblocks-cljs/)
+or try it out in your browser: [ClojureBlocks live](https://jhandke.codeberg.page/clojureblocks/)
