@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.function)
 
-(def colour 45)
+(def colour "#006400") ;; darkgreen
 
 (def defn-block
   {:type "defn_block"

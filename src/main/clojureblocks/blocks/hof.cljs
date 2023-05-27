@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.hof)
 
-(def colour 1)
+(def colour "#ff1493") ;; deeppink
 
 (def hof-map-block
   {:type "hof_map_block"

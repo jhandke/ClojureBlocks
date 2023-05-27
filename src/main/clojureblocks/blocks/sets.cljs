@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.sets)
 
-(def colour 330)
+(def colour "#00ff00") ;; lime
 
 (def union-block
   {:type "union_block"

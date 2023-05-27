@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.control)
 
-(def colour 315)
+(def colour "#00ffff") ;; aqua
 
 (def if-block
   {:type "if_block"

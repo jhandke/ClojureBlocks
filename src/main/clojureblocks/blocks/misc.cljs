@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.misc)
 
-(def colour 150)
+(def colour "#9c5e5e") ;; rosybrown
 
 (def frequencies-block
   {:type "frequencies_block"

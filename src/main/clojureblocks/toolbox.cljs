@@ -49,9 +49,11 @@
                :contents (concat (map block-to-toolbox seqs/top-blocks)
                                  [{:kind "category"
                                    :name "Access"
+                                   :colour seqs/colour
                                    :contents (map block-to-toolbox seqs/access-blocks)}
                                   {:kind "category"
                                    :name "Order"
+                                   :colour seqs/colour
                                    :contents (map block-to-toolbox seqs/order-blocks)}])}
               {:kind "category"
                :name "Maps"

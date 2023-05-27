@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.maps)
 
-(def colour 180)
+(def colour "#b87100") ;; darkorange
 
 (def assoc-block
   {:type "assoc_block"

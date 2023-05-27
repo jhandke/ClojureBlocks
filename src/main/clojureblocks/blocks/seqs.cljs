@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.seqs)
 
-(def colour 230)
+(def colour "#ff4500") ;; orangered
 
 (def list-block
   {:type "list_block"
