@@ -46,7 +46,6 @@
   (set! (.. @output-div -innerText)
         (string/join "\n"
                      (map (fn [result-element]
-                            (println result-element)
                             (str (get result-element :expression)
                                  " => "
                                  (if (get result-element :error)
