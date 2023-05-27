@@ -46,6 +46,7 @@
               {:kind "category"
                :name "Seqs"
                :colour seqs/colour
+               :expanded true ;; hacky bug fix. see https://github.com/google/blockly/issues/6940
                :contents (concat (map block-to-toolbox seqs/top-blocks)
                                  [{:kind "category"
                                    :name "Access"
