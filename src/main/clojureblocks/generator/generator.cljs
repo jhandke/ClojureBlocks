@@ -57,6 +57,7 @@
 (set! (.. clojuregenerator/clojure-generator -get-block) maps/generate-get-block)
 
 (set! (.. clojuregenerator/clojure-generator -atom-block) concurrency/generate-atom-block)
+(set! (.. clojuregenerator/clojure-generator -deref-block) concurrency/generate-deref-block)
 (set! (.. clojuregenerator/clojure-generator -swap-block) concurrency/generate-swap-block)
 (set! (.. clojuregenerator/clojure-generator -reset-block) concurrency/generate-reset-block)
 

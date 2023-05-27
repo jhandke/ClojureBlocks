@@ -7,6 +7,11 @@
   (let [value (generator/generate-statement-code block "value")]
     (str "(atom" (when-not (string/blank? value) (str " " value)) ")")))
 
+(defn generate-deref-block
+  [block]
+  (let [atom (generator/generate-statement-code block "atom")]
+    (str "(deref " atom ")")))
+
 (defn generate-swap-block
   [block]
   (let [atom (generator/generate-statement-code block "atom")
