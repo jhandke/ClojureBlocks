@@ -7,12 +7,15 @@
   (let [value (generator/generate-statement-code block "value")]
     (str "(atom" (when-not (string/blank? value) (str " " value)) ")")))
 
-(defn generate-agent-block
+(defn generate-swap-block
   [block]
-  (let [value (generator/generate-statement-code block "value")]
-    (str "(agent" (when-not (string/blank? value) (str " " value)) ")")))
+  (let [atom (generator/generate-statement-code block "atom")
+        function (generator/generate-statement-code block "function")
+        arguments (generator/generate-statement-code block "arguments")]
+    (str "(swap! " atom " " function (when-not (string/blank? arguments) (str " " arguments)) ")")))
 
-(defn generate-ref-block
+(defn generate-reset-block 
   [block]
-  (let [value (generator/generate-statement-code block "value")]
-    (str "(ref" (when-not (string/blank? value) (str " " value)) ")")))
+  (let [atom (generator/generate-statement-code block "atom")
+        value (generator/generate-statement-code block "value")]
+    (str "(reset! " atom " " value ")")))

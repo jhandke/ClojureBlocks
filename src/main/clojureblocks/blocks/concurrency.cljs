@@ -14,31 +14,40 @@
    :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/atom"})
 
-(def agent-block 
-  {:type "agent_block"
-   :message0 "(agent %1 value %2)"
+(def swap-block 
+  {:type "swap_block"
+   :message0 "(swap! %1 atom %2 fn %3 args %4)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
-            :name "value"
+            :name "atom"
+            :align "RIGHT"}
+           {:type "input_statement"
+            :name "function"
+            :align "RIGHT"}
+           {:type "input_statement"
+            :name "arguments"
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
    :colour colour
-   :helpUrl "https://clojuredocs.org/clojure.core/agent"})
+   :helpUrl "https://clojuredocs.org/clojure.core/swap!"})
 
-(def ref-block
-  {:type "ref_block"
-   :message0 "(ref %1 value %2)"
+(def reset-block 
+  {:type "reset_block"
+   :message0 "(reset! %1 atom %2 value %3)"
    :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "atom"
+            :align "RIGHT"}
            {:type "input_statement"
             :name "value"
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
    :colour colour
-   :helpUrl "https://clojuredocs.org/clojure.core/ref"})
+   :helpUrl "https://clojuredocs.org/clojure.core/reset!"})
 
 (def all 
   [atom-block
-   agent-block
-   ref-block])
+   swap-block
+   reset-block])
