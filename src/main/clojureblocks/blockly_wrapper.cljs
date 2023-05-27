@@ -56,20 +56,24 @@
   [blocks]
   (.defineBlocksWithJsonArray blockly (clj->js  blocks)))
 
-(defn reset-workspace
-  "Resets the blockly workspace."
-  [options persist]
+(defn inject-workspace
+  "Injects the blockly workspace."
+  [options]
   (let [blockly-div (.getElementById js/document blockly-div-id)]
     (.replaceChildren blockly-div)
     (reset! workspace
-            (.inject blockly "blockly-div" (clj->js (merge {:toolbox (toolbox/generate-toolbox)} options))))
-    (when persist
-      (serialization/save-workspace @workspace))))
+            (.inject blockly "blockly-div" (clj->js (merge {:toolbox (toolbox/generate-toolbox)} options))))))
+  
+(defn reset-blocks 
+  [persist]
+  (when persist
+    (serialization/save-workspace @workspace))
+  (. @workspace clear))
 
 (defn init-workspace
   [options output-function]
   (define-blocks blocks/all-blocks)
-  (reset-workspace options false)
+  (inject-workspace options)
   (load-workspace (serialization/load-workspace))
   (.addEventListener js/window "resize" resize-handler false)
   (resize-handler)

@@ -34,5 +34,6 @@
 (defn register-contextmenu []
   (.. ContextMenuRegistry -registry
       (register (clj->js hof-inspection-contextmenu-item)))
-  (.. ContextMenuRegistry -registry
-      (unregister "blockCollapseExpand")))
+  
+  (dorun (map (fn [ctx-menu-item] (.. ContextMenuRegistry -registry (unregister ctx-menu-item)))
+              #{"blockCollapseExpand" "workspaceDelete" "collapseWorkspace" "expandWorkspace"})))

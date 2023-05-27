@@ -30,8 +30,8 @@
     (blockly-wrapper/set-theme :dark)
     (blockly-wrapper/set-theme :light)))
 
-(defn reset-workspace []
-  (blockly-wrapper/reset-workspace blockly-options true)
+(defn reset []
+  (blockly-wrapper/reset-blocks true)
   (evaluator/reset-evaluation-context)
   (show-code ""))
 
@@ -60,7 +60,7 @@
   (.addEventListener @button-evaluate "click" evaluate-code-and-display)
 
   (reset! reset-button (.getElementById js/document "button-reset"))
-  (.addEventListener @reset-button "click" reset-workspace)
+  (.addEventListener @reset-button "click" reset)
 
   (reset! import-button (.getElementById js/document "button-import"))
   (.addEventListener @import-button "click" upload-workspace)
