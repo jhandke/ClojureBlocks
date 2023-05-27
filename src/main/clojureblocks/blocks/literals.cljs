@@ -10,7 +10,7 @@
             :text "text"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 90})
+   :colour colour})
 
 (def number-block
   {:type "number_block"
@@ -20,7 +20,7 @@
             :value 42}]
    :previousStatement nil
    :nextStatement nil
-   :colour 90})
+   :colour colour})
 
 (def symbol-block
   {:type "symbol_block"
@@ -30,7 +30,7 @@
             :text "x"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 315})
+   :colour colour})
 
 (def keyword-block
   {:type "keyword_block"
@@ -40,7 +40,7 @@
             :text "a"}]
    :previousStatement nil
    :nextStatement nil
-   :colour 45})
+   :colour colour})
 
 (def all
   [string-block
