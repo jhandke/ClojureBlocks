@@ -2,38 +2,6 @@
 
 (def colour "#ff4500") ;; orangered
 
-(def list-block
-  {:type "list_block"
-   :message0 "( %1 %2 )"
-   :args0 [{:type "input_dummy"}
-           {:type "input_statement"
-            :name "list-items"}]
-   :previousStatement nil
-   :nextStatement nil
-   :colour colour})
-
-(def vector-block
-  {:type "vector_block"
-   :message0 "[ %1 %2 ]"
-   :args0 [{:type "input_dummy"}
-           {:type "input_statement"
-            :name "vector-items"}]
-   :previousStatement nil
-   :nextStatement nil
-   :colour colour})
-
-(def map-block
-  {:type "map_block"
-   :message0 "{ %1 %2 }"
-   :args0 [{:type "input_dummy"}
-           {:type "input_statement"
-            :name "map-items"}]
-   :previousStatement nil
-   :nextStatement nil
-   :colour colour})
-
-
-
 (def count-block
   {:type "count_block",
    :message0 "(count %1 seq %2 )",
@@ -88,14 +56,27 @@
    :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/conj"})
 
+(def into-block
+  {:type "into_block"
+   :message0 "(into %1 to %2 from %3)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "destination"
+            :align "RIGHT"}
+           {:type "input_statement"
+            :name "source"
+            :align "RIGHT"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour
+   :helpUrl "https://clojuredocs.org/clojure.core/into"})
+
 (def top-blocks
-  [list-block
-   vector-block
-   map-block
-   count-block
+  [count-block
    empty-q-block
    cons-block
-   conj-block])
+   conj-block
+   into-block])
 
 (def first-block
   {:type "first_block",
@@ -260,13 +241,11 @@
    reverse-block])
 
 (def all
-  [list-block
-   vector-block
-   map-block
-   count-block
+  [count-block
    empty-q-block
-   cons-block
+   cons-block 
    conj-block
+   into-block
    first-block
    rest-block
    take-block

@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.literals)
 
-(def colour "#0000cd") ;; mediumblue
+(def colour "#4141fa") ;; mediumblue
 
 (def string-block
   {:type "string_block"

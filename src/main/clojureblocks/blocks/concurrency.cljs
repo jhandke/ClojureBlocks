@@ -1,6 +1,6 @@
 (ns clojureblocks.blocks.concurrency)
 
-(def colour "#1e90ff") ;; dodgerblue
+(def colour "#72a3f7") ;; dodgerblue
 
 (def atom-block
   {:type "atom_block"
