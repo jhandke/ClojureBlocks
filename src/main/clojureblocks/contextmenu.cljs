@@ -33,4 +33,6 @@
 
 (defn register-contextmenu []
   (.. ContextMenuRegistry -registry
-      (register (clj->js hof-inspection-contextmenu-item))))
+      (register (clj->js hof-inspection-contextmenu-item)))
+  (.. ContextMenuRegistry -registry
+      (unregister "blockCollapseExpand")))
