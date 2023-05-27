@@ -14,6 +14,18 @@
    :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/atom"})
 
+(def deref-block
+  {:type "deref_block"
+   :message0 "(deref %1 atom %2)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "atom"
+            :align "RIGHT"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour
+   :helpUrl "https://clojuredocs.org/clojure.core/deref"})
+
 (def swap-block 
   {:type "swap_block"
    :message0 "(swap! %1 atom %2 fn %3 args %4)"
