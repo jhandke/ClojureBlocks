@@ -33,10 +33,13 @@
 
 (def hof-reduce-block
   {:type "hof_reduce_block"
-   :message0 "(reduce %1 fn %2 coll %3)"
+   :message0 "(reduce %1 fn %2 val? %3 coll %4)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
+            :align "RIGHT"}
+           {:type "input_statement"
+            :name "value"
             :align "RIGHT"}
            {:type "input_statement"
             :name "collection"

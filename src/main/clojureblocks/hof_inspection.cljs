@@ -1,6 +1,7 @@
 (ns clojureblocks.hof-inspection
   (:require [clojureblocks.evaluator :as evaluator]
-            [clojureblocks.generator.generator :as generator]))
+            [clojureblocks.generator.generator :as generator]
+            [clojureblocks.hof-inspection :as inspection]))
 
 (def number-previews (atom 20))
 
@@ -35,13 +36,26 @@
         pred (fnext expression)
         coll (last expression)
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
-        inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))] 
+        inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
     (format-output (map
                     (fn [element]
                       (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))]
                         (str "(" pred " " element ") => " result)))
                     inspection-elements)
                    coll-size)))
+
+(defn reduce-steps
+  [elements start-value pred]
+  (loop [elements elements
+         last-result start-value
+         result []]
+    (if (empty? elements)
+      result
+      (let [current-element (first elements)
+            current-result (evaluator/evaluate-internal (str "(" pred " " current-element " " last-result ")"))
+            last-result-presentation (when last-result (str " " last-result))
+            current-line (str "(" pred last-result-presentation " " current-element ") => " current-result)]
+        (recur (rest elements) current-result (conj result current-line))))))
 
 (defn reduce-inspection
   [block]
@@ -50,17 +64,13 @@
                     (str "'" code))
         pred (fnext expression)
         coll (last expression)
+        value (when-not (= coll (second (next expression)))
+                (second (next expression)))
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
     (format-output
-     (loop [elements inspection-elements
-            last-result nil
-            result []]
-       (if (empty? elements)
-         result
-         (let [current-element (first elements)
-               current-result (evaluator/evaluate-internal (str "(" pred " " current-element " " last-result ")"))
-               last-result-presentation (when last-result (str " " last-result))
-               current-line (str "(" pred last-result-presentation " " current-element ") => " current-result)]
-           (recur (rest elements) current-result (conj result current-line)))))
+     (if value
+       (reduce-steps inspection-elements value pred)
+       (reduce-steps (rest inspection-elements) (first inspection-elements) pred))
      coll-size)))
+

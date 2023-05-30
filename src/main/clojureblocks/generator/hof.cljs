@@ -18,8 +18,9 @@
 (defn generate-hof-reduce-block
   [block]
   (let [pred (generator/generate-statement-code block "pred")
+        value (generator/generate-statement-code block "value")
         collection (generator/generate-statement-code block "collection")]
-    (str "(reduce " pred " " collection ")")))
+    (str "(reduce " pred (when-not (string/blank? value) (str " " value)) " " collection ")")))
 
 (defn generate-hof-partial-block
   [block]
