@@ -47,7 +47,8 @@ table {
     text-align: left;
 }
 
-.control-table th, td {
+.control-table th,
+td {
     padding: 0.4em;
 }
 
@@ -67,7 +68,7 @@ table {
     background-color: #63b132;
 }
 
-.button-reset  {
+.button-reset {
     background-color: #b13232;
 }
 
@@ -154,17 +155,17 @@ code {
     display: inline-block;
     width: 52px;
     height: 26px;
-  }
-  
-  /* Hide default HTML checkbox */
-  .switch input {
+}
+
+/* Hide default HTML checkbox */
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
-  
-  /* The slider */
-  .slider {
+}
+
+/* The slider */
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -174,9 +175,9 @@ code {
     background-color: #fff600;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -186,18 +187,30 @@ code {
     background-color: rgba(145, 145, 145, 0.719);
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked+.slider {
     background-color: #0400f4;
-  }
-  
-  /* input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  } */
-  
-  input:checked + .slider:before {
+}
+
+/* input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+} */
+
+input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
-  }
+}
+
+.num-previews-container {
+    text-align: center;
+}
+
+.num-preview-input {
+    background-color: transparent;
+    border: 1px solid white;
+    height: 26px;
+    font-size: large;
+    color: white;
+}

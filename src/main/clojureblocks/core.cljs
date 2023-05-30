@@ -3,7 +3,8 @@
             [clojureblocks.blockly-wrapper :as blockly-wrapper]
             [clojureblocks.evaluator :as evaluator]
             [clojureblocks.import-export :as import-export]
-            [clojureblocks.serialization :as serialization]))
+            [clojureblocks.serialization :as serialization]
+            [clojureblocks.hof-inspection :as inspection]))
 
 
 (def output-div (atom nil))
@@ -12,6 +13,7 @@
 (def export-button (atom nil))
 (def import-button (atom nil))
 (def theme-switch (atom nil))
+(def preview-number-input (atom nil))
 
 (def blockly-options
   {:theme (blockly-wrapper/get-default-theme)
@@ -29,6 +31,13 @@
   (if (.. e -target -checked)
     (blockly-wrapper/set-theme :dark)
     (blockly-wrapper/set-theme :light)))
+
+(defn handle-preview-number-change [event]
+  (let [new-value (.. event -target -value)]
+    (swap!
+     inspection/number-previews
+     (fn [old new] (if (integer? new) new old))
+     new-value)))
 
 (defn reset []
   (blockly-wrapper/reset-blocks true)
@@ -66,7 +75,10 @@
   (.addEventListener @import-button "click" upload-workspace)
 
   (reset! export-button (.getElementById js/document "button-export"))
-  (.addEventListener @export-button "click" download-workspace))
+  (.addEventListener @export-button "click" download-workspace)
+  
+  (reset! preview-number-input (.getElementById js/document "num-preview-input"))
+  (.addEventListener @preview-number-input "change" handle-preview-number-change))
 
 (reset! theme-switch (.getElementById js/document "checkbox-dark-theme"))
 (.addEventListener @theme-switch "change" handle-theme-switch)
