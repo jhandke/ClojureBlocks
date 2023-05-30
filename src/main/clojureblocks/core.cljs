@@ -27,6 +27,7 @@
   [code]
   (zprint/zprint-file-str (string/join "\n\n" (string/split-lines code)) "" {:style :rod
                                                                              :width 40}))
+
 (defn show-code
   "Displays code in output-div"
   [code]

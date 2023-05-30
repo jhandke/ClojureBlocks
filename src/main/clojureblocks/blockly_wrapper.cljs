@@ -36,11 +36,13 @@
           (.svgResize blockly @workspace))))))
 
 (defn generate-code-and-display [display-fn]
-  (let [code (.workspaceToCode
-              generator/generator
-              @workspace)]
-    (reset! generated-code code)
-    (display-fn code)))
+  (let [old-code @generated-code
+        new-code (.workspaceToCode
+                  generator/generator
+                  @workspace)]
+    (when-not (= old-code new-code)
+      (reset! generated-code new-code)
+      (display-fn new-code))))
 
 (defn blockly-change-handler [output-function]
   (generate-code-and-display output-function)
