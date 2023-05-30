@@ -4,7 +4,8 @@
             [clojureblocks.evaluator :as evaluator]
             [clojureblocks.import-export :as import-export]
             [clojureblocks.serialization :as serialization]
-            [clojureblocks.hof-inspection :as inspection]))
+            [clojureblocks.hof-inspection :as inspection]
+            [zprint.core :as zprint]))
 
 
 (def output-div (atom nil))
@@ -22,10 +23,16 @@
           :drag true
           :wheel false}})
 
+(defn format-code
+  [code]
+  (zprint/zprint-file-str (string/join "\n\n" (string/split-lines code)) "" {:style :rod
+                                                                             :width 40}))
 (defn show-code
   "Displays code in output-div"
   [code]
-  (set! (.. @output-div -innerText) code))
+  (let [formatted-code (format-code code)]
+    (println formatted-code)
+    (set! (.. @output-div -innerText) formatted-code)))
 
 (defn handle-theme-switch [e]
   (if (.. e -target -checked)
@@ -51,16 +58,16 @@
 (defn upload-workspace []
   (import-export/file-input (fn [file] (blockly-wrapper/load-workspace (.parse js/JSON file)))))
 
-(defn evaluate-code-and-display []
-  (set! (.. @output-div -innerText)
-        (string/join "\n"
-                     (map (fn [result-element]
-                            (str (get result-element :expression)
-                                 " => "
-                                 (if (get result-element :error)
-                                   (get result-element :error)
-                                   (get result-element :result))))
-                          (evaluator/split-and-evaluate @blockly-wrapper/generated-code)))))
+(defn evaluate-code-and-display [] 
+  (show-code
+   (string/join "\n"
+                (map (fn [result-element]
+                       (str (get result-element :expression)
+                            " ;; => "
+                            (if (get result-element :error)
+                              (get result-element :error)
+                              (get result-element :result))))
+                     (evaluator/split-and-evaluate @blockly-wrapper/generated-code)))))
 
 (defn register-io []
   (reset! output-div (.getElementById js/document "output"))

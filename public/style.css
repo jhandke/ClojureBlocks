@@ -76,6 +76,7 @@ code {
     font-size: large;
     color: white;
     font: Inconsolata, monospace;
+    white-space: pre;
 }
 
 .blocklyModalOverlay {
