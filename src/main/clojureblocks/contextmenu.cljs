@@ -17,8 +17,26 @@
   [scope]
   (modal-view/display-lines (inspection/filter-inspection (. scope -block))))
 
+(defmethod context-menu-action "hof_apply_block"
+  [scope]
+  (modal-view/display (inspection/apply-inspection (. scope -block))))
+
+(defmethod context-menu-action "hof_partial_block"
+ [scope]
+  (modal-view/display (inspection/partial-inspection (. scope -block))))
+
+(defmethod context-menu-action "hof_juxt_block"
+ [scope]
+ (modal-view/display (inspection/juxt-inspection (. scope -block))))
+
 (defn precondition [scope]
-  (if (contains? #{"hof_map_block" "hof_reduce_block" "hof_filter_block"} (.. scope -block -type))
+  (if (contains? #{"hof_map_block"
+                   "hof_reduce_block"
+                   "hof_filter_block"
+                   "hof_apply_block"
+                   "hof_partial_block" 
+                   "hof_juxt_block"} 
+                 (.. scope -block -type))
     "enabled"
     "disabled"))
 

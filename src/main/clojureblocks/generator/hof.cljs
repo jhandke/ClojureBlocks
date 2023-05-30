@@ -36,8 +36,5 @@
 
 (defn generate-hof-juxt-block
   [block]
-  (let [preds (generator/generate-statement-code block "preds")
-        collection (generator/generate-statement-code block "collection")]
-    (if (empty? collection)
-      (str "(juxt " preds ")")
-      (str "((juxt " preds ") " collection ")"))))
+  (let [preds (generator/generate-statement-code block "preds")]
+      (str "(juxt " preds ")")))

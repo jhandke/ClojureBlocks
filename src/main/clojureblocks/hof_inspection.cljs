@@ -1,7 +1,8 @@
 (ns clojureblocks.hof-inspection
   (:require [clojureblocks.evaluator :as evaluator]
             [clojureblocks.generator.generator :as generator]
-            [clojureblocks.hof-inspection :as inspection]))
+            [clojureblocks.hof-inspection :as inspection]
+            [clojure.string :as string]))
 
 (def number-previews (atom 20))
 
@@ -75,3 +76,29 @@
        (reduce-steps (rest inspection-elements) (first inspection-elements) pred))
      coll-size)))
 
+(defn partial-inspection
+  [block]
+  (let [code (.blockToCode generator/generator block)
+        expression (evaluator/evaluate-internal
+                    (str "'" code))
+        function (fnext expression)
+        args (rest (rest expression))]
+    (str "(fn [x] (" function " " (string/join " " args) " x))")))
+
+(defn apply-inspection
+  [block]
+  (let [code (.blockToCode generator/generator block)
+        expression (evaluator/evaluate-internal
+                    (str "'" code))
+        function (fnext expression)
+        args (rest (rest expression))
+        evaluated-args (map #(evaluator/evaluate-internal (str %)) args)]
+    (str "(" function " " (string/join " " (flatten evaluated-args)) ")")))
+
+(defn juxt-inspection
+  [block]
+  (let [code (.blockToCode generator/generator block)
+        expression (evaluator/evaluate-internal
+                    (str "'" code))
+        functions (next expression)]
+    (str "(fn [x] [" (string/join " " (map #(str "(" % " x)") functions)) "])")))

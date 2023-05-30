@@ -81,13 +81,10 @@
 
 (def hof-juxt-block
   {:type "hof_juxt_block"
-   :message0 "(juxt %1 fns %2 coll %3)"
+   :message0 "(juxt %1 fns %2)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "preds"
-            :align "RIGHT"}
-           {:type "input_statement"
-            :name "collection"
             :align "RIGHT"}]
    :previousStatement nil
    :nextStatement nil
