@@ -39,8 +39,9 @@
         inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
     (format-output (map
                     (fn [element]
-                      (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))]
-                        (str "(" pred " " element ") => " result)))
+                      (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
+                            comment (when-not result " ;; removed")]
+                        (str "(" pred " " element ") => " result comment)))
                     inspection-elements)
                    coll-size)))
 
