@@ -123,6 +123,8 @@ code {
 
 .blocklyModalContent {
     font-family: monospace;
+    font-size: large;
+    white-space: pre;
 }
 
 .blocklyModalBtn {
