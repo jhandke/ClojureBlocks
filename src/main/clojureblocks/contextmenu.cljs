@@ -7,7 +7,7 @@
 
 (defmethod context-menu-action "hof_map_block"
   [scope]
-  (modal-view/display-lines (inspection/map-inspection (. scope -block))))
+  (modal-view/display (inspection/map-inspection (. scope -block))))
 
 (defmethod context-menu-action "hof_reduce_block"
   [scope]
