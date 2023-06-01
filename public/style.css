@@ -33,7 +33,7 @@ table {
 .output-td {
     width: 85%;
     background-color: black;
-    padding: 1em;
+    /* padding: 1em; */
     vertical-align: top;
     text-align: left;
 }
@@ -42,14 +42,9 @@ table {
     min-width: 10rem;
     font-size: large;
     color: white;
-    /* padding: 1em; */
+    padding: 0.8em;
     vertical-align: top;
     text-align: left;
-}
-
-.control-table th,
-td {
-    padding: 0.4em;
 }
 
 .button {
@@ -72,11 +67,43 @@ td {
     background-color: #b13232;
 }
 
-code {
+.output-container {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#output {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* padding: 0.8em; */
+
     font-size: large;
     color: white;
-    font: Inconsolata, monospace;
+    font-family: monospace;
     white-space: pre;
+}
+
+/* Firefox scrollbar: */
+.output-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255, 128, 249) transparent;
+}
+
+/* all other browsers scrollbar: */
+.output-container::-webkit-scrollbar {
+    width: 8px;
+}
+  
+.output-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+.output-container::-webkit-scrollbar-thumb {
+    background-color: rgb(255, 128, 249);
+    border-radius: 6px;
 }
 
 .blocklyModalOverlay {
