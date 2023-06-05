@@ -38,8 +38,13 @@ table {
     text-align: left;
 }
 
+.control-table {
+    table-layout: fixed
+}
+
 .control-td {
     min-width: 10rem;
+    width: 50%;
     font-size: large;
     color: white;
     padding: 0.8em;
@@ -101,11 +106,11 @@ table {
 .output-container::-webkit-scrollbar {
     width: 8px;
 }
-  
+
 .output-container::-webkit-scrollbar-track {
     background: transparent;
 }
-  
+
 .output-container::-webkit-scrollbar-thumb {
     background-color: rgb(255, 128, 249);
     border-radius: 6px;
@@ -251,7 +256,7 @@ input:checked+.slider:before {
 }
 
 .button-settings {
-    background-color:rgb(192, 77, 186);
+    background-color: rgb(192, 77, 186);
     /* color: black; */
 }
 
