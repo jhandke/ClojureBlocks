@@ -31,6 +31,21 @@
    :colour colour
    :helpUrl "https://clojuredocs.org/clojure.core/filter"})
 
+(def hof-remove-block
+  {:type "hof_remove_block"
+   :message0 "(remove %1 fn %2 coll %3)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "pred"
+            :align "RIGHT"}
+           {:type "input_statement"
+            :name "collection"
+            :align "RIGHT"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour
+   :helpUrl "https://clojuredocs.org/clojure.core/remove"})
+
 (def hof-reduce-block
   {:type "hof_reduce_block"
    :message0 "(reduce %1 fn %2 val? %3 coll %4)"
@@ -94,6 +109,7 @@
 (def all
   [hof-map-block
    hof-filter-block
+   hof-remove-block
    hof-reduce-block
    hof-partial-block
    hof-apply-block

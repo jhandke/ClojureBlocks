@@ -6,9 +6,9 @@
             [clojureblocks.generator.hof :as hof]
             [clojureblocks.generator.literals :as literals]
             [clojureblocks.generator.maps :as maps]
+            [clojureblocks.generator.misc :as misc]
             [clojureblocks.generator.seqs :as seqs]
-            [clojureblocks.generator.sets :as sets]
-            [clojureblocks.generator.misc :as misc]))
+            [clojureblocks.generator.sets :as sets]))
 
 (def generator clojuregenerator/clojure-generator)
 
@@ -41,6 +41,7 @@
 
 (set! (.. clojuregenerator/clojure-generator -hof-map-block) hof/generate-hof-map-block)
 (set! (.. clojuregenerator/clojure-generator -hof-filter-block) hof/generate-hof-filter-block)
+(set! (.. clojuregenerator/clojure-generator -hof-remove-block) hof/generate-hof-remove-block)
 (set! (.. clojuregenerator/clojure-generator -hof-reduce-block) hof/generate-hof-reduce-block)
 (set! (.. clojuregenerator/clojure-generator -hof-partial-block) hof/generate-hof-partial-block)
 (set! (.. clojuregenerator/clojure-generator -hof-apply-block) hof/generate-hof-apply-block)
