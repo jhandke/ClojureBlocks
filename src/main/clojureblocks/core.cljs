@@ -4,17 +4,25 @@
             [clojureblocks.evaluator :as evaluator]
             [clojureblocks.import-export :as import-export]
             [clojureblocks.serialization :as serialization]
-            [clojureblocks.hof-inspection :as inspection]
-[clojureblocks.code-formatter :as formatter]))
+            [clojureblocks.code-formatter :as formatter]))
 
 
 (def output-div (atom nil))
 (def reset-button (atom nil))
 (def button-evaluate (atom nil))
+
+(def button-settings (atom nil))
+(def dialog-settings (atom nil))
+(def button-settings-dialog-close (atom nil))
+(def checkbox-auto-evaluate (atom nil))
+(def input-print-length (atom nil))
+(def input-preview-length (atom nil))
+
 (def export-button (atom nil))
 (def import-button (atom nil))
 (def theme-switch (atom nil))
-(def preview-number-input (atom nil))
+
+(def settings (atom nil))
 
 (def blockly-options
   {:theme (blockly-wrapper/get-default-theme)
@@ -26,20 +34,36 @@
 (defn show-code
   "Displays code in output-div"
   [code]
-  (let [formatted-code (formatter/format-code code)]
-    (set! (.. @output-div -innerText) formatted-code)))
+  (set! (.. @output-div -innerText) code))
 
 (defn handle-theme-switch [e]
   (if (.. e -target -checked)
-    (blockly-wrapper/set-theme :dark)
-    (blockly-wrapper/set-theme :light)))
+    (do (blockly-wrapper/set-theme :dark)
+        (.. @dialog-settings -classList (add "dialog-dark")))
+    (do (blockly-wrapper/set-theme :light)
+        (.. @dialog-settings -classList (remove "dialog-dark")))))
 
-(defn handle-preview-number-change [event]
-  (let [new-value (.. event -target -value)]
-    (swap!
-     inspection/number-previews
-     (fn [old new] (if (integer? new) new old))
-     new-value)))
+(defn open-settings-dialog
+  []
+  (let [settings @settings]
+    (set! (.-checked @checkbox-auto-evaluate) (get settings :auto-evaluation))
+    (set! (.-value @input-preview-length) (get settings :preview-length))
+    (set! (.-value @input-print-length) (get settings :print-length)))
+  (.showModal @dialog-settings))
+
+(defn handle-settings-dialog
+  []
+  (let [auto-evaluation (. @checkbox-auto-evaluate -checked)
+        print-length (js/parseInt (. @input-print-length -value))
+        preview-length (js/parseInt (. @input-preview-length -value))
+        settings-map {:auto-evaluation auto-evaluation
+                      :print-length print-length
+                      :preview-length preview-length}]
+    (reset! settings settings-map)
+    (serialization/save-settings settings-map)
+    (set! (.-disabled @button-evaluate) (get settings-map :auto-evaluation))
+    (println "TODO: apply print-length and preview-length")
+    (.close @dialog-settings)))
 
 (defn reset []
   (blockly-wrapper/reset-blocks true)
@@ -53,7 +77,20 @@
 (defn upload-workspace []
   (import-export/file-input (fn [file] (blockly-wrapper/load-workspace (.parse js/JSON file)))))
 
-(defn evaluate-code-and-display [] 
+(defn evaluate-code-and-display
+  [code] 
+  (show-code
+   (string/join "\n"
+                (map (fn [result-element]
+                       (str (get result-element :expression)
+                            " ; => "
+                            (if (get result-element :error)
+                              (get result-element :error)
+                              (get result-element :result))))
+                     (evaluator/split-and-evaluate code)))))
+
+(defn evaluate-manual
+  []
   (show-code
    (string/join "\n"
                 (map (fn [result-element]
@@ -64,11 +101,18 @@
                               (get result-element :result))))
                      (evaluator/split-and-evaluate @blockly-wrapper/generated-code)))))
 
+(defn code-update-handler
+  [code]
+  (let [formatted-code (formatter/format-code code)]
+    (if (get @settings :auto-evaluation)
+      (evaluate-code-and-display code)
+      (show-code formatted-code))))
+
 (defn register-io []
   (reset! output-div (.getElementById js/document "output"))
 
   (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
-  (.addEventListener @button-evaluate "click" evaluate-code-and-display)
+  (.addEventListener @button-evaluate "click" evaluate-manual)
 
   (reset! reset-button (.getElementById js/document "button-reset"))
   (.addEventListener @reset-button "click" reset)
@@ -78,23 +122,43 @@
 
   (reset! export-button (.getElementById js/document "button-export"))
   (.addEventListener @export-button "click" download-workspace)
-  
-  (reset! preview-number-input (.getElementById js/document "num-preview-input"))
-  (.addEventListener @preview-number-input "change" handle-preview-number-change))
 
-(reset! theme-switch (.getElementById js/document "checkbox-dark-theme"))
-(.addEventListener @theme-switch "change" handle-theme-switch)
-(let [saved-theme (serialization/load-theme)]
-  (when (= saved-theme :dark)
-    (set! (.. @theme-switch -checked) true))
-  (when (= saved-theme :light)
-    (set! (.. @theme-switch -checked) false)))
+  (reset! dialog-settings (.getElementById js/document "dialog-settings"))
+
+  (reset! button-settings (.getElementById js/document "button-settings"))
+  (.addEventListener @button-settings "click" open-settings-dialog)
+
+  (reset! checkbox-auto-evaluate (.getElementById js/document "checkbox-auto-evaluation"))
+  (reset! input-print-length (.getElementById js/document "input-print-length"))
+  (reset! input-preview-length (.getElementById js/document "input-preview-length"))
+
+  (reset! button-settings-dialog-close (.getElementById js/document "button-dialog-close"))
+  (.addEventListener @button-settings-dialog-close "click" handle-settings-dialog)
+
+  (reset! theme-switch (.getElementById js/document "checkbox-dark-theme"))
+  (.addEventListener @theme-switch "change" handle-theme-switch))
+
+(defn load-theme
+  []
+  (let [saved-theme (serialization/load-theme)]
+    (when (= saved-theme :dark)
+      (set! (.. @theme-switch -checked) true))
+    (.. @dialog-settings -classList (add "dialog-dark"))
+    (when (= saved-theme :light)
+      (set! (.. @theme-switch -checked) false)
+      (.. @dialog-settings -classList (remove "dialog-dark")))))
+
+(defn load-settings 
+  []
+  (reset! settings (serialization/load-settings)))
 
 (defn clojureblocks-init
   "Main entrypoint. Initializes the application."
   []
-  (blockly-wrapper/init-workspace blockly-options show-code)
-  (register-io))
+  (blockly-wrapper/init-workspace blockly-options code-update-handler)
+  (register-io)
+  (load-theme)
+  (load-settings))
 
 (defn ^:dev/after-load reload
   "Reloads the entire page."

@@ -63,6 +63,11 @@ table {
     background-color: #63b132;
 }
 
+.button-evaluate:disabled {
+    background-color: rgb(104, 104, 104);
+    color: rgb(178, 178, 178);
+}
+
 .button-reset {
     background-color: #b13232;
 }
@@ -243,4 +248,51 @@ input:checked+.slider:before {
     height: 26px;
     font-size: large;
     color: white;
+}
+
+.button-settings {
+    background-color:rgb(192, 77, 186);
+    /* color: black; */
+}
+
+dialog {
+    font-family: sans-serif;
+}
+
+.dialog-dark {
+    background-color: rgb(50, 50, 50);
+    color: white;
+}
+
+.dialog-dark input {
+    background-color: rgb(74, 74, 74);
+    color: white;
+}
+
+dialog::backdrop {
+    background: rgba(44, 44, 44, 0.6);
+    backdrop-filter: blur(1.5px);
+}
+
+.button-dialog-close {
+    background-color: #63b132;
+}
+
+.dialog-settings-header {
+    font-size: xx-large;
+    font-weight: 500;
+    padding-bottom: 0.4em;
+}
+
+.dialog-settings-line {
+    height: 2em;
+}
+
+.dialog-settings-input {
+    float: right;
+    margin-left: 1em;
+}
+
+#checkbox-auto-evaluation {
+    text-align: end;
 }

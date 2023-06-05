@@ -4,6 +4,7 @@
 
 (def storage-key "clojureblocks-ws")
 (def theme-key "clojureblocks-theme")
+(def settings-key "clojureblocks-settings")
 
 (defn serialize
   "Serializes the `workspace`."
@@ -36,3 +37,13 @@
         parsed-id (.parse js/JSON theme-id)]
     (when-not (nil? parsed-id)
       (get {":light" :light, ":dark" :dark} parsed-id :unreachable))))
+
+(defn save-settings
+  "Saves the `settings`-map to some storage"
+  [settings]
+  (storage/set-item! settings-key (.stringify js/JSON (clj->js settings))))
+
+(defn load-settings
+  "Loads the settings from storage"
+  []
+  (js->clj (.parse js/JSON (storage/get-item settings-key)) :keywordize-keys true))
