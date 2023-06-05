@@ -4,7 +4,8 @@
             [clojureblocks.evaluator :as evaluator]
             [clojureblocks.import-export :as import-export]
             [clojureblocks.serialization :as serialization]
-            [clojureblocks.code-formatter :as formatter]))
+            [clojureblocks.code-formatter :as formatter]
+            [clojureblocks.hof-inspection :as hof-inspection]))
 
 
 (def output-div (atom nil))
@@ -43,6 +44,12 @@
     (do (blockly-wrapper/set-theme :light)
         (.. @dialog-settings -classList (remove "dialog-dark")))))
 
+(defn apply-settings
+  [settings-map]
+  (set! (.-disabled @button-evaluate) (get settings-map :auto-evaluation))
+  (evaluator/set-print-length (get settings-map :print-length))
+  (reset! hof-inspection/preview-length (get settings-map :preview-length)))
+
 (defn open-settings-dialog
   []
   (let [settings @settings]
@@ -53,16 +60,12 @@
 
 (defn handle-settings-dialog
   []
-  (let [auto-evaluation (. @checkbox-auto-evaluate -checked)
-        print-length (js/parseInt (. @input-print-length -value))
-        preview-length (js/parseInt (. @input-preview-length -value))
-        settings-map {:auto-evaluation auto-evaluation
-                      :print-length print-length
-                      :preview-length preview-length}]
+  (let [settings-map {:auto-evaluation (. @checkbox-auto-evaluate -checked)
+                      :print-length (js/parseInt (. @input-print-length -value))
+                      :preview-length (js/parseInt (. @input-preview-length -value))}]
     (reset! settings settings-map)
     (serialization/save-settings settings-map)
-    (set! (.-disabled @button-evaluate) (get settings-map :auto-evaluation))
-    (println "TODO: apply print-length and preview-length")
+    (apply-settings settings-map)
     (.close @dialog-settings)))
 
 (defn reset []
@@ -150,7 +153,10 @@
 
 (defn load-settings 
   []
-  (reset! settings (serialization/load-settings)))
+  (let [settings-map (serialization/load-settings)]
+    (when settings-map 
+      (reset! settings (serialization/load-settings))
+      (apply-settings settings-map))))
 
 (defn clojureblocks-init
   "Main entrypoint. Initializes the application."

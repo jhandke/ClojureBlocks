@@ -2,6 +2,10 @@
   (:require [clojure.string :as string]
             [clojureblocks.sci-wrapper :as sci]))
 
+(defn set-print-length
+  [value]
+  (reset! sci/clojureblocks-print-length value))
+
 (defn split-and-evaluate
   "Splits `code` into lines and returns formatted evaluation results"
   [code]

@@ -5,11 +5,11 @@
             [clojure.string :as string]
             [clojureblocks.code-formatter :as formatter]))
 
-(def number-previews (atom 12))
+(def preview-length (atom 12))
 
 (defn format-output
   [lines amount]
-  (let [code-lines (if (< @number-previews amount)
+  (let [code-lines (if (< @preview-length amount)
                 (conj (vec lines) ";; ...")
                 lines)]
     (formatter/format-code (string/join "\n" code-lines))))
@@ -22,7 +22,7 @@
         pred (fnext expression)
         coll (last expression)
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
-        inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
+        inspection-elements (evaluator/evaluate-internal (str "(take " @preview-length " " coll ")"))]
     (format-output
      (map
       (fn [element]
@@ -39,7 +39,7 @@
         pred (fnext expression)
         coll (last expression)
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
-        inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
+        inspection-elements (evaluator/evaluate-internal (str "(take " @preview-length " " coll ")"))]
     (format-output (map
                     (fn [element]
                       (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
@@ -71,7 +71,7 @@
         value (when-not (= coll (second (next expression)))
                 (second (next expression)))
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
-        inspection-elements (evaluator/evaluate-internal (str "(take " @number-previews " " coll ")"))]
+        inspection-elements (evaluator/evaluate-internal (str "(take " @preview-length " " coll ")"))]
     (format-output
      (if value
        (reduce-steps inspection-elements value pred)
