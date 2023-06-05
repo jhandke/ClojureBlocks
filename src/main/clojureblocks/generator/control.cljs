@@ -8,11 +8,11 @@
   (let [condition (generator/generate-statement-code block "condition")
         then-body (generator/generate-statement-code block "then")
         else-body (generator/generate-statement-code block "else")]
-    (str "(if " condition " " then-body " " else-body ")")))
+    (generator/expression "if" condition then-body else-body)))
 
 (defn generate-when-block
   "Generates the code for a when-block: `(when test body)`"
   [^blockly/Block block]
   (let [condition (generator/generate-statement-code block "condition")
         body (generator/generate-statement-code block "body")]
-    (str "(when " condition " " body ")")))
+    (generator/expression "when" condition body)))

@@ -1,26 +1,25 @@
 (ns clojureblocks.generator.concurrency
-  (:require [clojure.string :as string]
-            [clojureblocks.generator.clojure :as generator]))
+  (:require [clojureblocks.generator.clojure :as generator]))
 
 (defn generate-atom-block
   [block]
   (let [value (generator/generate-statement-code block "value")]
-    (str "(atom" (when-not (string/blank? value) (str " " value)) ")")))
+    (generator/expression "atom" value)))
 
 (defn generate-deref-block
   [block]
   (let [atom (generator/generate-statement-code block "atom")]
-    (str "(deref " atom ")")))
+    (generator/expression "deref" atom)))
 
 (defn generate-swap-block
   [block]
   (let [atom (generator/generate-statement-code block "atom")
         function (generator/generate-statement-code block "function")
         arguments (generator/generate-statement-code block "arguments")]
-    (str "(swap! " atom " " function (when-not (string/blank? arguments) (str " " arguments)) ")")))
+    (generator/expression "swap!" atom function arguments)))
 
-(defn generate-reset-block 
+(defn generate-reset-block
   [block]
   (let [atom (generator/generate-statement-code block "atom")
         value (generator/generate-statement-code block "value")]
-    (str "(reset! " atom " " value ")")))
+    (generator/expression "reset!" atom value)))

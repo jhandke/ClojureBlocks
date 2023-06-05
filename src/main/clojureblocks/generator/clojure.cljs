@@ -16,3 +16,6 @@
          (conj statements statement)))
       (string/join " " statements))))
 
+(defn expression
+  [& args]
+  (str "(" (string/trim (string/join " " (remove string/blank? args))) ")"))
