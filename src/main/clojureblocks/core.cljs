@@ -23,7 +23,9 @@
 (def import-button (atom nil))
 (def theme-switch (atom nil))
 
-(def settings (atom nil))
+(def settings (atom {:auto-evaluation false
+                     :preview-length 12
+                     :print-length 12}))
 
 (def blockly-options
   {:theme (blockly-wrapper/get-default-theme)
@@ -155,8 +157,8 @@
   []
   (let [settings-map (serialization/load-settings)]
     (when settings-map 
-      (reset! settings (serialization/load-settings))
-      (apply-settings settings-map))))
+      (reset! settings (serialization/load-settings)))
+    (apply-settings @settings)))
 
 (defn clojureblocks-init
   "Main entrypoint. Initializes the application."

@@ -5,7 +5,7 @@
             [clojure.string :as string]
             [clojureblocks.code-formatter :as formatter]))
 
-(def preview-length (atom 12))
+(def preview-length (atom nil))
 
 (defn format-output
   [lines amount]

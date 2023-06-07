@@ -7,7 +7,7 @@
 
 (def sci-options {})
 (def sci-context (atom (sci/init sci-options)))
-(def clojureblocks-print-length (atom 12))
+(def clojureblocks-print-length (atom nil))
 
 (defn emulate-print
   "Surrounds `expression` with (pr-str ...) for print-like behaivour."
