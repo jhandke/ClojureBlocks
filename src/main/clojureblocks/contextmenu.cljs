@@ -1,38 +1,43 @@
 (ns clojureblocks.contextmenu
   (:require ["blockly" :refer (ContextMenuRegistry)]
             [clojureblocks.hof-inspection :as inspection]
-            [clojureblocks.modal-view :as modal-view]))
+            [clojureblocks.modal-preview :as modal-preview]))
 
 (defmulti context-menu-action (fn [scope] (.. scope -block -type)))
 
 (defmethod context-menu-action "hof_map_block"
   [scope]
-  (modal-view/display (inspection/map-inspection (. scope -block))))
+  (modal-preview/display (inspection/map-inspection (. scope -block))))
 
 (defmethod context-menu-action "hof_reduce_block"
   [scope]
-  (modal-view/display-lines (inspection/reduce-inspection (. scope -block))))
+  (modal-preview/display (inspection/reduce-inspection (. scope -block))))
 
 (defmethod context-menu-action "hof_filter_block"
   [scope]
-  (modal-view/display-lines (inspection/filter-inspection (. scope -block))))
+  (modal-preview/display (inspection/filter-inspection (. scope -block))))
+
+(defmethod context-menu-action "hof_remove_block"
+  [scope]
+  (modal-preview/display (inspection/remove-inspection (. scope -block))))
 
 (defmethod context-menu-action "hof_apply_block"
   [scope]
-  (modal-view/display (inspection/apply-inspection (. scope -block))))
+  (modal-preview/display (inspection/apply-inspection (. scope -block))))
 
 (defmethod context-menu-action "hof_partial_block"
  [scope]
-  (modal-view/display (inspection/partial-inspection (. scope -block))))
+  (modal-preview/display (inspection/partial-inspection (. scope -block))))
 
 (defmethod context-menu-action "hof_juxt_block"
  [scope]
- (modal-view/display (inspection/juxt-inspection (. scope -block))))
+ (modal-preview/display (inspection/juxt-inspection (. scope -block))))
 
 (defn precondition [scope]
   (if (contains? #{"hof_map_block"
                    "hof_reduce_block"
                    "hof_filter_block"
+                   "hof_remove_block"
                    "hof_apply_block"
                    "hof_partial_block" 
                    "hof_juxt_block"} 

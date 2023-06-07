@@ -4,8 +4,8 @@
             [clojureblocks.evaluator :as evaluator]
             [clojureblocks.import-export :as import-export]
             [clojureblocks.serialization :as serialization]
-            [clojureblocks.code-formatter :as formatter]
-            [clojureblocks.hof-inspection :as hof-inspection]))
+            [clojureblocks.hof-inspection :as hof-inspection]
+            [clojureblocks.modal-preview :as modal-preview]))
 
 
 (def output-div (atom nil))
@@ -25,11 +25,11 @@
 
 (def settings (atom {:auto-evaluation false
                      :preview-length 12
-                     :print-length 12}))
+                     :print-length 12
+                     :dark-theme false}))
 
 (def blockly-options
-  {:theme (blockly-wrapper/get-default-theme)
-   :move {:scrollbars {:horizontal true
+  {:move {:scrollbars {:horizontal true
                        :vertical true}
           :drag true
           :wheel false}})
@@ -39,18 +39,35 @@
   [code]
   (set! (.. @output-div -innerText) code))
 
-(defn handle-theme-switch [e]
-  (if (.. e -target -checked)
-    (do (blockly-wrapper/set-theme :dark)
-        (.. @dialog-settings -classList (add "dialog-dark")))
-    (do (blockly-wrapper/set-theme :light)
-        (.. @dialog-settings -classList (remove "dialog-dark")))))
-
 (defn apply-settings
   [settings-map]
   (set! (.-disabled @button-evaluate) (get settings-map :auto-evaluation))
   (evaluator/set-print-length (get settings-map :print-length))
-  (reset! hof-inspection/preview-length (get settings-map :preview-length)))
+  (reset! hof-inspection/preview-length (get settings-map :preview-length))
+
+  (if (= true (get settings-map :dark-theme))
+    (do
+      (set! (.. @theme-switch -checked) true)
+      (.. @dialog-settings -classList (add "dialog-dark"))
+      (modal-preview/set-dark-theme true)
+      (blockly-wrapper/set-dark-theme true)) 
+    (do
+      (set! (.. @theme-switch -checked) false)
+      (.. @dialog-settings -classList (remove "dialog-dark"))
+      (modal-preview/set-dark-theme false)
+      (blockly-wrapper/set-dark-theme false))))
+
+(defn update-settings
+  "Updates, applies and persists the settings specified in `settings-map`."
+  [settings-map]
+  (let [settings-to-update (if settings-map settings-map {})
+        [_ new] (swap-vals! settings #(merge %1 %2) settings-to-update)]
+    (apply-settings new)
+    (serialization/save-settings new)))
+
+(defn handle-theme-switch [e]
+  (let [switch-checked (.. e -target -checked)]
+    (update-settings {:dark-theme switch-checked})))
 
 (defn open-settings-dialog
   []
@@ -65,9 +82,7 @@
   (let [settings-map {:auto-evaluation (. @checkbox-auto-evaluate -checked)
                       :print-length (js/parseInt (. @input-print-length -value))
                       :preview-length (js/parseInt (. @input-preview-length -value))}]
-    (reset! settings settings-map)
-    (serialization/save-settings settings-map)
-    (apply-settings settings-map)
+    (update-settings settings-map)
     (.close @dialog-settings)))
 
 (defn reset []
@@ -108,10 +123,9 @@
 
 (defn code-update-handler
   [code]
-  (let [formatted-code (formatter/format-code code)]
-    (if (get @settings :auto-evaluation)
-      (evaluate-code-and-display code)
-      (show-code formatted-code))))
+  (if (get @settings :auto-evaluation)
+    (evaluate-code-and-display code)
+    (show-code code)))
 
 (defn register-io []
   (reset! output-div (.getElementById js/document "output"))
@@ -137,35 +151,22 @@
   (reset! input-print-length (.getElementById js/document "input-print-length"))
   (reset! input-preview-length (.getElementById js/document "input-preview-length"))
 
-  (reset! button-settings-dialog-close (.getElementById js/document "button-dialog-close"))
+  (reset! button-settings-dialog-close (.getElementById js/document "button-dialog-settings-close"))
   (.addEventListener @button-settings-dialog-close "click" handle-settings-dialog)
 
   (reset! theme-switch (.getElementById js/document "checkbox-dark-theme"))
   (.addEventListener @theme-switch "change" handle-theme-switch))
 
-(defn load-theme
-  []
-  (let [saved-theme (serialization/load-theme)]
-    (when (= saved-theme :dark)
-      (set! (.. @theme-switch -checked) true))
-    (.. @dialog-settings -classList (add "dialog-dark"))
-    (when (= saved-theme :light)
-      (set! (.. @theme-switch -checked) false)
-      (.. @dialog-settings -classList (remove "dialog-dark")))))
-
-(defn load-settings 
+(defn load-settings
   []
   (let [settings-map (serialization/load-settings)]
-    (when settings-map 
-      (reset! settings (serialization/load-settings)))
-    (apply-settings @settings)))
+    (update-settings settings-map)))
 
 (defn clojureblocks-init
   "Main entrypoint. Initializes the application."
   []
   (blockly-wrapper/init-workspace blockly-options code-update-handler)
   (register-io)
-  (load-theme)
   (load-settings))
 
 (defn ^:dev/after-load reload

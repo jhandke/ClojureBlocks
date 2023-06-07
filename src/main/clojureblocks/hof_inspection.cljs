@@ -2,17 +2,16 @@
   (:require [clojureblocks.evaluator :as evaluator]
             [clojureblocks.generator.generator :as generator]
             [clojureblocks.hof-inspection :as inspection]
-            [clojure.string :as string]
-            [clojureblocks.code-formatter :as formatter]))
+            [clojure.string :as string]))
 
 (def preview-length (atom nil))
 
 (defn format-output
   [lines amount]
   (let [code-lines (if (< @preview-length amount)
-                (conj (vec lines) ";; ...")
-                lines)]
-    (formatter/format-code (string/join "\n" code-lines))))
+                     (conj (vec lines) ";; ...")
+                     lines)]
+    (string/join "\n" code-lines)))
 
 (defn map-inspection
   [block]
@@ -40,13 +39,28 @@
         coll (last expression)
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         inspection-elements (evaluator/evaluate-internal (str "(take " @preview-length " " coll ")"))]
-    (format-output (map
-                    (fn [element]
-                      (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
-                            comment (when-not result " (removed)")]
-                        (str "(" pred " " element ") ;; => " result comment)))
-                    inspection-elements)
-                   coll-size)))
+    (string/join "\n" (map
+                       (fn [element]
+                         (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
+                               comment (when-not result " (removed)")]
+                           (str "(" pred " " element ") ; => " result comment)))
+                       inspection-elements))))
+
+(defn remove-inspection
+  [block]
+  (let [code (.blockToCode generator/generator block)
+        expression (evaluator/evaluate-internal
+                    (str "'" code))
+        pred (fnext expression)
+        coll (last expression)
+        coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
+        inspection-elements (evaluator/evaluate-internal (str "(take " @preview-length " " coll ")"))]
+    (string/join "\n" (map
+                       (fn [element]
+                         (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
+                               comment (when result " (removed)")]
+                           (str "(" pred " " element ") ; => " result comment)))
+                       inspection-elements))))
 
 (defn reduce-steps
   [elements start-value pred]
@@ -84,9 +98,8 @@
         expression (evaluator/evaluate-internal
                     (str "'" code))
         function (fnext expression)
-        partial-args (rest (rest expression))]
-    (formatter/format-code
-     (str "(fn [& args] (apply " function " " (string/join " " partial-args) " args))"))))
+        partial-args (rest (rest expression))] 
+    (str "(fn [& args] (apply " function " " (string/join " " partial-args) " args))")))
 
 (defn apply-inspection
   [block]
@@ -100,11 +113,9 @@
         evaluated-coll (evaluator/evaluate-internal (str coll))]
     (println args coll)
     (println evaluated-args evaluated-coll)
-    (if (empty? args)
-      (formatter/format-code
-       (str "(" function " " (string/join " " evaluated-coll) ")"))
-      (formatter/format-code
-       (str "(" function " " (string/join " " evaluated-args) " " (string/join " " evaluated-coll) ")")))))
+    (if (empty? args) 
+      (str "(" function " " (string/join " " evaluated-coll) ")") 
+      (str "(" function " " (string/join " " evaluated-args) " " (string/join " " evaluated-coll) ")"))))
 
 (defn juxt-inspection
   [block]
@@ -112,5 +123,4 @@
         expression (evaluator/evaluate-internal
                     (str "'" code))
         functions (next expression)]
-    (formatter/format-code 
-     (str "(fn [& args] [" (string/join " " (map #(str "(apply " % " args)") functions)) "])"))))
+    (str "(fn [& args] [" (string/join " " (map #(str "(apply " % " args)") functions)) "])")))

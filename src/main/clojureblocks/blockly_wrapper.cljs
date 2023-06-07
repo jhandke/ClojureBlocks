@@ -4,13 +4,14 @@
             [clojureblocks.blocks.all :as blocks]
             [clojureblocks.generator.generator :as generator]
             [clojureblocks.contextmenu :as contextmenu]
-            [clojureblocks.modal-view :as modal-view]
             [clojureblocks.serialization :as serialization]
             [clojureblocks.toolbox :as toolbox]))
 
 (def workspace (atom nil))
+
 (def blockly-div-id "blockly-div")
 (def blockly-area-id "blockly-area")
+
 (def generated-code (atom ""))
 
 (def themes {:light (.. blockly -Themes -Classic)
@@ -80,22 +81,12 @@
   (.addEventListener js/window "resize" resize-handler false)
   (resize-handler)
   (. ^js/Object @workspace addChangeListener (fn [] (blockly-change-handler output-function)))
-  (modal-view/init @workspace)
   (contextmenu/register-contextmenu))
 
-(defn get-default-theme
-  "Returns default theme if no theme is saved."
-  []
-  (let [theme (serialization/load-theme)]
-    (if-not (nil? theme)
-      (get themes theme)
-      (get themes :dark))))
-
-(defn set-theme
-  "Sets the current theme to `theme`"
-  [theme]
-  (.. ^js/Object @workspace -themeManager_ (setTheme (themes theme)))
-  (serialization/save-theme (str theme)))
+(defn set-dark-theme
+  [dark?]
+  (let [new-theme (if dark? (get themes :dark) (get themes :light))]
+    (.. ^js/Object @workspace -themeManager_ (setTheme new-theme))))
 
 (defn export-workspace []
   (serialization/serialize @workspace))

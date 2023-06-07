@@ -19,7 +19,7 @@
 
     <body>
         <dialog class="" id="dialog-settings">
-            <div class="dialog-settings-header">Settings</div>
+            <div class="dialog-header">Settings</div>
             <div class="dialog-settings-line">
                 <label for="checkbox-auto-evaluation">auto evaluation</label>
                 <input type="checkbox" class="dialog-settings-input" id="checkbox-auto-evaluation" name="checkbox-auto-evaluation" checked="false">
@@ -32,7 +32,17 @@
                 <label for="input-preview-length">preview length</label>
                 <input type="number" class="dialog-settings-input" name="input-preview-length" id="input-preview-length" min="1" max="100" step="1" value="20">
             </div>
-            <button type="button" class="button button-dialog-close" id="button-dialog-close">save</button>
+            <button type="button" class="button button-dialog-close" id="button-dialog-settings-close">save</button>
+        </dialog>
+
+        <dialog id="dialog-preview">
+            <div class="dialog-header">
+                Block inspection
+                <button type="button" id="button-dialog-preview-close"><img src="img/close-icon.svg"></button>
+            </div>
+            <div id="dialog-preview-content">
+                i am the content
+            </div>
         </dialog>
 
         <table>

@@ -3,12 +3,11 @@
  ["src/main"]
 
  :dependencies
- [[org.babashka/sci "0.7.39"]
-  [zprint "1.2.6"]]
+ [[org.babashka/sci "0.7.39"]]
 
  :dev-http {8080 "public"}
  :builds
  {:clojureblocks
   {:target :browser
-   :compiler-options {:optimizations :simple} ;; needed for PreviewModal.js :(
+  ; :compiler-options {:optimizations :simple} ;; needed for PreviewModal.js :(
    :modules {:main {:init-fn clojureblocks.core/clojureblocks-init}}}}}
