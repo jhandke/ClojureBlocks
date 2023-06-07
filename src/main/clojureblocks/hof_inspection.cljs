@@ -101,6 +101,10 @@
         partial-args (rest (rest expression))] 
     (str "(fn [& args] (apply " function " " (string/join " " partial-args) " args))")))
 
+(defn apply-rows
+  [coll prefix-length]
+  (string/join (apply str "\n" (repeat prefix-length " ")) (map (fn [row] (string/join " " row)) coll)))
+
 (defn apply-inspection
   [block]
   (let [code (.blockToCode generator/generator block)
@@ -110,12 +114,11 @@
         args (rest (rest (butlast expression)))
         coll (last expression)
         evaluated-args (map #(evaluator/evaluate-internal (str %)) args)
-        evaluated-coll (evaluator/evaluate-internal (str coll))]
-    (println args coll)
-    (println evaluated-args evaluated-coll)
-    (if (empty? args) 
-      (str "(" function " " (string/join " " evaluated-coll) ")") 
-      (str "(" function " " (string/join " " evaluated-args) " " (string/join " " evaluated-coll) ")"))))
+        evaluated-coll (evaluator/evaluate-internal (str "(partition 20 " coll ")"))
+        prefix (str "(" function (when-not (empty? args) (str " " (string/join " " evaluated-args))) " ")
+        prefix-length (count prefix)]
+    (println prefix)
+    (str prefix (apply-rows evaluated-coll prefix-length) ")")))
 
 (defn juxt-inspection
   [block]
