@@ -18,6 +18,23 @@
     </head>
 
     <body>
+        <dialog class="" id="dialog-settings">
+            <div class="dialog-settings-header">Settings</div>
+            <div class="dialog-settings-line">
+                <label for="checkbox-auto-evaluation">auto evaluation</label>
+                <input type="checkbox" class="dialog-settings-input" id="checkbox-auto-evaluation" name="checkbox-auto-evaluation" checked="false">
+            </div>
+            <div class="dialog-settings-line">
+                <label for="input-print-lenth">**print-length**</label>
+                <input type="number" class="dialog-settings-input" name="input-print-length" id="input-print-length" min="1" max="100" step="1" value="12">
+            </div>
+            <div class="dialog-settings-line">
+                <label for="input-preview-length">preview length</label>
+                <input type="number" class="dialog-settings-input" name="input-preview-length" id="input-preview-length" min="1" max="100" step="1" value="20">
+            </div>
+            <button type="button" class="button button-dialog-close" id="button-dialog-close">save</button>
+        </dialog>
+
         <table>
             <tr>
                 <td id="blockly-area" colspan="2">
@@ -25,18 +42,18 @@
             </tr>
             <tr class="footer">
                 <td class="output-td">
-                    <code id="output"></code>
+                    <div class="output-container">
+                        <div id="output"></div>
+                    </div>
                 </td>
                 <td class="control-td">
-                    <table>
+                    <table class="control-table">
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 <button type="button" class="button button-wide button-evaluate"
-                                    id="button-evaluate-all">evaluate all</button>
+                                    id="button-evaluate-all">evaluate</button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
+                            <td>
                                 <button type="button" class="button button-reset" id="button-reset">reset</button>
                             </td>
                         </tr>
@@ -49,11 +66,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="num-preview-input-container">
-                                <label for="num-preview-input">preview:</label>
-                                <input type="number" id="num-preview-input" name="num-preview-input" value="12" min="1" max="20" step="1" class="num-preview-input">
+                            <td colspan="2">
+                                <button type="button" class="button button-settings" id="button-settings">Settings</button>
                             </td>
-                            <td class="theme-switcher-container">
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="theme-switcher-container">
                                 <img src="img/sun-icon.svg" alt="Sun" class="theme-switcher-icon light" />
                                 <label class="switch">
                                     <input type="checkbox" id="checkbox-dark-theme" checked>
