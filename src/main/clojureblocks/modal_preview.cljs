@@ -27,7 +27,6 @@
         width (.-width rect)
         clientX (.-clientX event)
         clientY (.-clientY event)]
-    (println top clientY height)
     (when-not (and
            (<= top clientY)
            (<= clientY (+ top height))
