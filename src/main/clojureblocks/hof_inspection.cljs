@@ -123,4 +123,4 @@
         expression (evaluator/evaluate-internal
                     (str "'" code))
         functions (next expression)]
-    (str "(fn [& args] [" (string/join " " (map #(str "(apply " % " args)") functions)) "])")))
+    (str "(fn [& args] [" (string/join "\n              " (map #(str "(apply " % " args)") functions)) "])")))
