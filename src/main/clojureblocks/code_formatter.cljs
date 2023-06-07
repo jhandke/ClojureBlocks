@@ -4,10 +4,9 @@
 (def zprint-options {:style :rod
                      :width 40
                      :parse-string-all? true
+                     :parse {:interpose "\n\n"}
                      :comment {:inline? true}})
 
 (defn format-code
   [code]
-  code
-  ; do nothing for now... (zp/zprint-str code zprint-options)
-  )
+  (zp/zprint-str code zprint-options))
