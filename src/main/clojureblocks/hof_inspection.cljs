@@ -84,9 +84,9 @@
         expression (evaluator/evaluate-internal
                     (str "'" code))
         function (fnext expression)
-        args (rest (rest expression))]
+        partial-args (rest (rest expression))]
     (formatter/format-code
-     (str "(fn [x] (" function " " (string/join " " args) " x))"))))
+     (str "(fn [& args] (apply " function " " (string/join " " partial-args) " args))"))))
 
 (defn apply-inspection
   [block]
@@ -94,10 +94,17 @@
         expression (evaluator/evaluate-internal
                     (str "'" code))
         function (fnext expression)
-        args (rest (rest expression))
-        evaluated-args (map #(evaluator/evaluate-internal (str %)) args)]
-    (formatter/format-code
-     (str "(" function " " (string/join " " (flatten evaluated-args)) ")"))))
+        args (rest (rest (butlast expression)))
+        coll (last expression)
+        evaluated-args (map #(evaluator/evaluate-internal (str %)) args)
+        evaluated-coll (evaluator/evaluate-internal (str coll))]
+    (println args coll)
+    (println evaluated-args evaluated-coll)
+    (if (empty? args)
+      (formatter/format-code
+       (str "(" function " " (string/join " " evaluated-coll) ")"))
+      (formatter/format-code
+       (str "(" function " " (string/join " " evaluated-args) " " (string/join " " evaluated-coll) ")")))))
 
 (defn juxt-inspection
   [block]
@@ -106,4 +113,4 @@
                     (str "'" code))
         functions (next expression)]
     (formatter/format-code 
-     (str "(fn [&args] [" (string/join " " (map #(str "(apply " % " args)") functions)) "])"))))
+     (str "(fn [& args] [" (string/join " " (map #(str "(apply " % " args)") functions)) "])"))))
