@@ -60,4 +60,4 @@
   
   ;; mit (doseq [x [1 2 3]] (foo x))
   (dorun (map (fn [ctx-menu-item] (.. ContextMenuRegistry -registry (unregister ctx-menu-item)))
-              #{"blockCollapseExpand" "workspaceDelete" "collapseWorkspace" "expandWorkspace"})))
+              #{"blockCollapseExpand" "blockDisable" "workspaceDelete" "collapseWorkspace" "expandWorkspace"})))
