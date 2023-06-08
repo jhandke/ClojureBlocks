@@ -4,8 +4,9 @@
 
 (def hof-map-block
   {:type "hof_map_block"
-   :message0 "(map fn %1 seq %2 )"
-   :args0 [{:type "input_statement"
+   :message0 "(map %1 fn: %2 coll: %3)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
             :name "hof-map-function"
             :align "RIGHT"}
            {:type "input_statement"
@@ -18,7 +19,7 @@
 
 (def hof-filter-block
   {:type "hof_filter_block"
-   :message0 "(filter %1 fn %2 coll %3)"
+   :message0 "(filter %1 fn: %2 coll: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -33,7 +34,7 @@
 
 (def hof-remove-block
   {:type "hof_remove_block"
-   :message0 "(remove %1 fn %2 coll %3)"
+   :message0 "(remove %1 fn: %2 coll: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -48,7 +49,7 @@
 
 (def hof-reduce-block
   {:type "hof_reduce_block"
-   :message0 "(reduce %1 fn %2 val? %3 coll %4)"
+   :message0 "(reduce %1 fn: %2 val?: %3 coll: %4)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -66,7 +67,7 @@
 
 (def hof-partial-block
   {:type "hof_partial_block"
-   :message0 "(partial %1 fn %2 args %3)"
+   :message0 "(partial %1 fn: %2 args: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -81,7 +82,7 @@
 
 (def hof-apply-block
   {:type "hof_apply_block"
-   :message0 "(apply %1 fn %2 args %3)"
+   :message0 "(apply %1 fn: %2 args: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -96,7 +97,7 @@
 
 (def hof-juxt-block
   {:type "hof_juxt_block"
-   :message0 "(juxt %1 fns %2)"
+   :message0 "(juxt %1 fns: %2)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "preds"

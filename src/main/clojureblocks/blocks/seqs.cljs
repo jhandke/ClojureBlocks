@@ -4,7 +4,7 @@
 
 (def count-block
   {:type "count_block",
-   :message0 "(count %1 seq %2 )",
+   :message0 "(count %1 coll: %2 )",
    :args0 [{:type "input_dummy"}
            {:type "input_statement",
             :name "collection"
@@ -16,7 +16,7 @@
 
 (def empty-q-block 
   {:type "empty_q_block",
-   :message0 "(empty? %1 seq %2 )",
+   :message0 "(empty? %1 coll: %2 )",
    :args0 [{:type "input_dummy"}
            {:type "input_statement",
             :name "collection"
@@ -28,7 +28,7 @@
 
 (def cons-block
   {:type "cons_block",
-   :message0 "(cons %1 x %2 seq %3 )",
+   :message0 "(cons %1 x: %2 coll: %3 )",
    :args0 [{:type "input_dummy"}
            {:type "input_statement",
             :name "element"
@@ -43,7 +43,7 @@
 
 (def conj-block
   {:type "conj_block",
-   :message0 "(conj %1 seq %2 x %3 )",
+   :message0 "(conj %1 coll: %2 x: %3 )",
    :args0 [{:type "input_dummy"}
            {:type "input_statement",
             :name "collection"
@@ -58,7 +58,7 @@
 
 (def into-block
   {:type "into_block"
-   :message0 "(into %1 to %2 from %3)"
+   :message0 "(into %1 to: %2 from: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "destination"
@@ -80,7 +80,7 @@
 
 (def first-block
   {:type "first_block",
-   :message0 "(first %1 seq %2 )",
+   :message0 "(first %1 coll: %2 )",
    :args0 [{:type "input_dummy"}
            {:type "input_statement",
             :name "collection"
@@ -92,7 +92,7 @@
 
 (def rest-block
   {:type "rest_block",
-   :message0 "(rest %1 seq %2 )",
+   :message0 "(rest %1 coll: %2 )",
    :args0 [{:type "input_dummy"}
            {:type "input_statement",
             :name "collection"
@@ -104,7 +104,7 @@
 
 (def take-block
   {:type "take_block"
-   :message0 "(take %1 n %2 coll %3 )"
+   :message0 "(take %1 n: %2 coll: %3 )"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "n"
@@ -119,7 +119,7 @@
 
 (def drop-block
   {:type "drop_block"
-   :message0 "(drop %1 n %2 coll %3 )"
+   :message0 "(drop %1 n: %2 coll: %3 )"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "n"
@@ -134,7 +134,7 @@
 
 (def take-while-block
   {:type "take_while_block"
-   :message0 "(take-while %1 pred %2 coll %3 )"
+   :message0 "(take-while %1 pred: %2 coll: %3 )"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -149,7 +149,7 @@
 
 (def drop-while-block
   {:type "drop_while_block"
-   :message0 "(drop-while %1 pred %2 coll %3 )"
+   :message0 "(drop-while %1 pred: %2 coll: %3 )"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -164,7 +164,7 @@
 
 (def concat-block 
   {:type "concat_block"
-   :message0 "(concat %1 colls %2 )"
+   :message0 "(concat %1 colls: %2 )"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "collections"
@@ -185,7 +185,7 @@
 
 (def sort-block
   {:type "sort_block"
-   :message0 "(sort %1 coll %2)"
+   :message0 "(sort %1 coll: %2)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "collection"
@@ -197,7 +197,7 @@
 
 (def sort-by-block
   {:type "sort_by_block"
-   :message0 "(sort-by %1 pred %2 coll %3)"
+   :message0 "(sort-by %1 pred: %2 coll: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "pred"
@@ -212,7 +212,7 @@
 
 (def shuffle-block
   {:type "shuffle_block"
-   :message0 "(shuffle %1 coll %2)"
+   :message0 "(shuffle %1 coll: %2)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "collection"
@@ -224,7 +224,7 @@
 
 (def reverse-block
   {:type "reverse_block"
-   :message0 "(reverse %1 coll %2)"
+   :message0 "(reverse %1 coll: %2)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "collection"

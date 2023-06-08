@@ -4,7 +4,7 @@
 
 (def assoc-block
   {:type "assoc_block"
-   :message0 "(assoc %1 map %2 key %3 value %4)"
+   :message0 "(assoc %1 map: %2 key: %3 value: %4)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "map"
@@ -22,7 +22,7 @@
 
 (def dissoc-block
   {:type "dissoc_block"
-   :message0 "(dissoc %1 map %2 key %3)"
+   :message0 "(dissoc %1 map: %2 key: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "map"
@@ -37,7 +37,7 @@
 
 (def get-block
   {:type "get_block"
-   :message0 "(get %1 map %2 key %3 default %4)"
+   :message0 "(get %1 map: %2 key: %3 default?: %4)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "map"

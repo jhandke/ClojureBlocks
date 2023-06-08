@@ -4,7 +4,7 @@
 
 (def union-block
   {:type "union_block"
-   :message0 "(union %1 s1 %2 s2 %3)"
+   :message0 "(union %1 s1: %2 s2: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "set1"
@@ -19,7 +19,7 @@
 
 (def intersection-block
   {:type "intersection_block"
-   :message0 "(intersection %1 s1 %2 s2 %3)"
+   :message0 "(intersection %1 s1: %2 s2: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "set1"
@@ -34,7 +34,7 @@
 
 (def difference-block
   {:type "difference_block"
-   :message0 "(difference %1 s1 %2 s2 %3)"
+   :message0 "(difference %1 s1: %2 s2: %3)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "set1"

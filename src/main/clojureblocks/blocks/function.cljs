@@ -4,7 +4,7 @@
 
 (def defn-block
   {:type "defn_block"
-   :message0 "(defn %1 %2 args [ %3 ] %4 body %5)"
+   :message0 "(defn %1 %2 args: [ %3 ] %4 body: %5)"
    :args0 [{:type "field_input"
             :name "function_name"
             :text "my-fn"}
@@ -21,7 +21,7 @@
 
 (def fn-block
   {:type "fn_block"
-   :message0 "(fn %1 args [ %2 ] %3 body %4)"
+   :message0 "(fn %1 args: [ %2 ] %3 body: %4)"
    :args0 [{:type "input_dummy"}
            {:type "input_statement"
             :name "args"
@@ -38,7 +38,7 @@
 
 (def fn-call-block
   {:type "fn_call_block"
-   :message0 "(call %1 %2 args %3 )"
+   :message0 "(%1 %2 args: %3 )"
    :args0 [{:type "field_input"
             :name "function_name"
             :text "my-fn"}

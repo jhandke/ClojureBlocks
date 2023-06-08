@@ -4,8 +4,9 @@
 
 (def if-block
   {:type "if_block"
-   :message0 "if %1 then %2 else %3"
-   :args0 [{:type "input_statement"
+   :message0 "(if %1 cond: %2 then: %3 else: %4)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
             :name "condition"}
            {:type "input_statement"
             :name "then"}
@@ -18,8 +19,9 @@
 
 (def when-block
   {:type "when_block"
-   :message0 "when %1 then %2"
-   :args0 [{:type "input_statement"
+   :message0 "(when %1 cond: %2 then: %3)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
             :name "condition"}
            {:type "input_statement"
             :name "body"}]
