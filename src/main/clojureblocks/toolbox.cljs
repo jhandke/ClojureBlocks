@@ -6,6 +6,7 @@
             [clojureblocks.blocks.literals :as literals]
             [clojureblocks.blocks.maps :as maps]
             [clojureblocks.blocks.misc :as misc]
+            [clojureblocks.blocks.mutlimethods :as multimethods]
             [clojureblocks.blocks.seqs :as seqs]
             [clojureblocks.blocks.sets :as sets]))
 
@@ -76,6 +77,10 @@
                :name "Concurrency"
                :colour concurrency/colour
                :contents (map block-to-toolbox concurrency/all)}
+              {:kind "category"
+               :name "Multimethods"
+               :colour multimethods/colour
+               :contents (map block-to-toolbox multimethods/all)}
               {:kind "category"
                :name "Misc."
                :colour misc/colour

@@ -6,6 +6,7 @@
             [clojureblocks.blocks.literals :as literals]
             [clojureblocks.blocks.maps :as maps]
             [clojureblocks.blocks.misc :as misc]
+            [clojureblocks.blocks.mutlimethods :as multimethods]
             [clojureblocks.blocks.seqs :as seqs]
             [clojureblocks.blocks.sets :as sets]))
 
@@ -18,4 +19,5 @@
           concurrency/all
           maps/all
           sets/all
+          multimethods/all
           misc/all))

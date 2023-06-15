@@ -7,6 +7,7 @@
             [clojureblocks.generator.literals :as literals]
             [clojureblocks.generator.maps :as maps]
             [clojureblocks.generator.misc :as misc]
+            [clojureblocks.generator.multimethods :as multimethods]
             [clojureblocks.generator.seqs :as seqs]
             [clojureblocks.generator.sets :as sets]))
 
@@ -77,3 +78,6 @@
 (set! (.. clojuregenerator/clojure-generator -dedupe-block) misc/generate-dedupe-block)
 (set! (.. clojuregenerator/clojure-generator -interleave-block) misc/generate-interleave-block)
 (set! (.. clojuregenerator/clojure-generator -interpose-block) misc/generate-interpose-block)
+
+(set! (.. clojuregenerator/clojure-generator -defmulti-block) multimethods/generate-defmulti-block)
+(set! (.. clojuregenerator/clojure-generator -defmethod-block) multimethods/generate-defmethod-block)
