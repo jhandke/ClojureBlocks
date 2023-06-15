@@ -39,3 +39,9 @@
   [block]
   (let [items (generator/generate-statement-code block "map-items")]
     (str "{" items "}")))
+
+(defn generate-set-block
+  "Generates the code for a set block: `#{1 :b \"three\"}`"
+  [block]
+  (let [items (generator/generate-statement-code block "set-items")]
+    (str "#{" items "}")))

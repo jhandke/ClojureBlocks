@@ -72,6 +72,16 @@
    :nextStatement nil
    :colour colour})
 
+(def set-block
+  {:type "set_block"
+   :message0 "#{ %1 %2 }"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "set-items"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour})
+
 (def all
   [string-block
    number-block
@@ -79,4 +89,5 @@
    keyword-block
    list-block
    vector-block
-   map-block])
+   map-block
+   set-block])

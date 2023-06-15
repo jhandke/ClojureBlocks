@@ -19,6 +19,7 @@
 (set! (.. clojuregenerator/clojure-generator -list-block) literals/generate-list-block)
 (set! (.. clojuregenerator/clojure-generator -vector-block) literals/generate-vector-block)
 (set! (.. clojuregenerator/clojure-generator -map-block) literals/generate-map-block)
+(set! (.. clojuregenerator/clojure-generator -set-block) literals/generate-set-block)
 
 (set! (.. clojuregenerator/clojure-generator -count-block) seqs/generate-count-block)
 (set! (.. clojuregenerator/clojure-generator -empty-q-block) seqs/generate-empty-q-block)
