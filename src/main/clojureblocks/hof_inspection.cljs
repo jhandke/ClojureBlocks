@@ -121,9 +121,10 @@
         args (rest (rest (butlast expression)))
         coll (last expression)
         evaluated-args (map #(evaluator/evaluate-internal (str %)) args)
-        evaluated-coll (evaluator/evaluate-internal (str "(partition 20 " coll ")"))
+        evaluated-coll (evaluator/evaluate-internal (str "(partition-all 20 " coll ")"))
         prefix (str "(" function (when-not (empty? args) (str " " (string/join " " evaluated-args))) " ")
         prefix-length (count prefix)]
+    (println coll prefix-length)
     (str prefix (apply-rows evaluated-coll prefix-length) ")")))
 
 (defn juxt-inspection
