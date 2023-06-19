@@ -14,8 +14,12 @@
 
 (defn evaluate-internal
   "Evaluates single expression for internal use"
-  [expression]
-  (sci/evaluate-inspection expression))
+  ([expression]
+   (evaluate-internal expression false))
+  ([expression print?]
+   (if print?
+     (get (sci/evaluate expression) :result)
+     (sci/evaluate-inspection expression))))
 
 (defn reset-evaluation-context
   "Resets the evaluation context."
