@@ -70,6 +70,7 @@
 (set! (.. clojuregenerator/clojure-generator -intersection-block) sets/generate-intersection-block)
 (set! (.. clojuregenerator/clojure-generator -difference-block) sets/generate-difference-block)
 
+(set! (.. clojuregenerator/clojure-generator -quote-block) misc/generate-quote-block)
 (set! (.. clojuregenerator/clojure-generator -frequencies-block) misc/generate-frequencies-block)
 (set! (.. clojuregenerator/clojure-generator -partition-block) misc/generate-partition-block)
 (set! (.. clojuregenerator/clojure-generator -partition-by-block) misc/generate-partition-by-block)

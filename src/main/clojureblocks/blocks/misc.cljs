@@ -2,6 +2,18 @@
 
 (def colour "#9c5e5e") ;; rosybrown
 
+(def quote-block
+  {:type "quote_block"
+   :message0 "(quote %1 %2)"
+   :args0 [{:type "input_dummy"}
+           {:type "input_statement"
+            :name "body"
+            :align "RIGHT"}]
+   :previousStatement nil
+   :nextStatement nil
+   :colour colour
+   :helpUrl "https://clojuredocs.org/clojure.core/quote"})
+
 (def frequencies-block
   {:type "frequencies_block"
    :message0 "(frequencies %1 coll %2)"
@@ -118,7 +130,8 @@
 
 
 (def all
-  [frequencies-block
+  [quote-block
+   frequencies-block
    partition-block
    partition-by-block
    group-by-block

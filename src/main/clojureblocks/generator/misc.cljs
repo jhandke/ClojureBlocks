@@ -1,6 +1,11 @@
 (ns clojureblocks.generator.misc
   (:require [clojureblocks.generator.clojure :as generator]))
 
+(defn generate-quote-block
+  [block]
+  (let [body (generator/generate-statement-code block "body")]
+    (generator/expression "quote" body)))
+
 (defn generate-frequencies-block
   [block]
   (let [collection (generator/generate-statement-code block "collection")]
