@@ -11,31 +11,39 @@
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
                     (str "'" code))
+        evaluated-expression (evaluator/evaluate-internal
+                              (str expression)
+                              true)
         pred (fnext expression)
         coll (last expression)
         num-previews @preview-length
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
-        inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str (string/join "\n"
+        inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))] 
+    (str expression "\n;; => " evaluated-expression "\n\n"
+         (string/join "\n"
                       (map
                        (fn [element]
                          (let [res (evaluator/evaluate-internal (str "(" pred " " element ")"))]
                            (str "(" pred " " element ") ;; => " res)))
                        inspection-elements))
          (when (> coll-size num-previews)
-           "\n; ..."))))
+           "\n;; ..."))))
 
 (defn filter-inspection
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
                     (str "'" code))
+        evaluated-expression (evaluator/evaluate-internal
+                              (str expression)
+                              true)
         pred (fnext expression)
         coll (last expression)
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str (string/join "\n" (map
+    (str expression "\n;; => " evaluated-expression "\n\n"
+         (string/join "\n" (map
                             (fn [element]
                               (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
                                     comment (when-not result " (removed)")]
@@ -49,12 +57,16 @@
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
                     (str "'" code))
+        evaluated-expression (evaluator/evaluate-internal
+                              (str expression)
+                              true)
         pred (fnext expression)
         coll (last expression)
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str (string/join "\n" (map
+    (str expression "\n;; => " evaluated-expression "\n\n"
+         (string/join "\n" (map
                             (fn [element]
                               (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
                                     comment (when result " (removed)")]
@@ -81,6 +93,9 @@
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
                     (str "'" code))
+        evaluated-expression (evaluator/evaluate-internal
+                              (str expression)
+                              true)
         pred (fnext expression)
         coll (last expression)
         value (when-not (= coll (second (next expression)))
@@ -88,7 +103,7 @@
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str
+    (str expression "\n;; => " evaluated-expression "\n\n"
      (if value
        (reduce-steps inspection-elements value pred)
        (reduce-steps (rest inspection-elements) (first inspection-elements) pred))
@@ -124,6 +139,9 @@
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
                     (str "'" code))
+        evaluated-expression (evaluator/evaluate-internal
+                              (str expression)
+                              true)
         function (fnext expression)
         args (rest (rest (butlast expression)))
         coll (last expression)
@@ -131,7 +149,8 @@
         prefix (str "(" function (when-not (empty? args) (str " " (string/join " " args))) " ")
         prefix-length (count prefix)]
     (println coll prefix-length)
-    (str prefix (apply-rows evaluated-coll prefix-length) ")")))
+    (str expression "\n;; => " evaluated-expression "\n\n"
+         prefix (apply-rows evaluated-coll prefix-length) ")")))
 
 (defn juxt-inspection
   [block]
