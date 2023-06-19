@@ -104,12 +104,19 @@
         partial-args (rest (rest expression))]
     (str "(fn [& args] (apply " function " " (string/join " " partial-args) " args))")))
 
+(defn string-representation
+  [maybe-string]
+  (if (string? maybe-string)
+    (str "\"" maybe-string "\"") 
+    maybe-string))
+
 (defn apply-rows
-  [coll prefix-length]
+  [coll prefix-length] 
   (string/join
    (apply str "\n" (repeat prefix-length " "))
    (map
-    (fn [row] (string/join " " row))
+    (fn [row] (string/join " " 
+                           (map string-representation row)))
     coll)))
 
 (defn apply-inspection
@@ -120,9 +127,8 @@
         function (fnext expression)
         args (rest (rest (butlast expression)))
         coll (last expression)
-        evaluated-args (map #(evaluator/evaluate-internal (str %)) args)
         evaluated-coll (evaluator/evaluate-internal (str "(partition-all 20 " coll ")"))
-        prefix (str "(" function (when-not (empty? args) (str " " (string/join " " evaluated-args))) " ")
+        prefix (str "(" function (when-not (empty? args) (str " " (string/join " " args))) " ")
         prefix-length (count prefix)]
     (println coll prefix-length)
     (str prefix (apply-rows evaluated-coll prefix-length) ")")))
