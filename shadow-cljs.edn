@@ -3,7 +3,8 @@
  ["src/main"]
 
  :dependencies
- [[org.babashka/sci "0.7.39"]]
+ [[org.babashka/sci "0.7.39"]
+  [zprint "1.2.7"]]
 
  :dev-http {8080 "public"}
  :builds

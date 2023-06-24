@@ -2,10 +2,11 @@
   (:require [clojure.string :as string]
             [clojureblocks.blockly-wrapper :as blockly-wrapper]
             [clojureblocks.evaluator :as evaluator]
-            [clojureblocks.import-export :as import-export]
-            [clojureblocks.serialization :as serialization]
             [clojureblocks.hof-inspection :as hof-inspection]
-            [clojureblocks.modal-preview :as modal-preview]))
+            [clojureblocks.import-export :as import-export]
+            [clojureblocks.modal-preview :as modal-preview]
+            [clojureblocks.serialization :as serialization]
+            [zprint.core :as zp]))
 
 
 (def output-div (atom nil))
@@ -37,7 +38,9 @@
 (defn show-code
   "Displays code in output-div"
   [code]
-  (set! (.. @output-div -innerText) code))
+  (let [formatted-code (zp/zprint-file-str code "clojureblocks" {:parse-string-all? true
+                                                                 :parse {:interpose "\n\n"}})]
+    (set! (.. @output-div -innerText) formatted-code)))
 
 (defn apply-settings
   [settings-map]
@@ -50,7 +53,7 @@
       (set! (.. @theme-switch -checked) true)
       (.. @dialog-settings -classList (add "dialog-dark"))
       (modal-preview/set-dark-theme true)
-      (blockly-wrapper/set-dark-theme true)) 
+      (blockly-wrapper/set-dark-theme true))
     (do
       (set! (.. @theme-switch -checked) false)
       (.. @dialog-settings -classList (remove "dialog-dark"))
@@ -98,7 +101,7 @@
   (import-export/file-input (fn [file] (blockly-wrapper/load-workspace (.parse js/JSON file)))))
 
 (defn evaluate-code-and-display
-  [code] 
+  [code]
   (show-code
    (string/join "\n"
                 (map (fn [result-element]
