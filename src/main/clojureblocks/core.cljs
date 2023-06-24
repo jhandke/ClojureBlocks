@@ -38,8 +38,9 @@
 (defn show-code
   "Displays code in output-div"
   [code]
-  (let [formatted-code (zp/zprint-file-str code "clojureblocks" {:parse-string-all? true
-                                                                 :parse {:interpose "\n\n"}})]
+  (let [formatted-code (zp/zprint-file-str code "clojureblocks" {:parse-string-all? true})]
+    (println code)
+    (println formatted-code)
     (set! (.. @output-div -innerText) formatted-code)))
 
 (defn apply-settings
@@ -103,7 +104,7 @@
 (defn evaluate-code-and-display
   [code]
   (show-code
-   (string/join "\n"
+   (string/join "\n\n"
                 (map (fn [result-element]
                        (str (get result-element :expression)
                             " ; => "
@@ -115,7 +116,7 @@
 (defn evaluate-manual
   []
   (show-code
-   (string/join "\n"
+   (string/join "\n\n"
                 (map (fn [result-element]
                        (str (get result-element :expression)
                             " ; => "
@@ -128,7 +129,7 @@
   [code]
   (if (get @settings :auto-evaluation)
     (evaluate-code-and-display code)
-    (show-code code)))
+    (show-code (string/join "\n\n" (string/split-lines code)))))
 
 (defn register-io []
   (reset! output-div (.getElementById js/document "output"))
