@@ -117,7 +117,8 @@
                     (str "'" code))
         function (fnext expression)
         partial-args (rest (rest expression))]
-    (str "(fn [& args] (apply " function " " (string/join " " partial-args) " args))")))
+    (str expression "\n\n"
+         "(fn [& args] (apply " function " " (string/join " " partial-args) " args))")))
 
 (defn string-representation
   [maybe-string]
@@ -146,9 +147,8 @@
         args (rest (rest (butlast expression)))
         coll (last expression)
         evaluated-coll (evaluator/evaluate-internal (str "(partition-all 20 " coll ")"))
-        prefix (str "(" function (when-not (empty? args) (str " " (string/join " " args))) " ")
+        prefix (str "(" function (when-not (empty? args) (str " " (string/join " " (map string-representation args)))) " ")
         prefix-length (count prefix)]
-    (println coll prefix-length)
     (str expression "\n;; => " evaluated-expression "\n\n"
          prefix (apply-rows evaluated-coll prefix-length) ")")))
 
@@ -158,4 +158,5 @@
         expression (evaluator/evaluate-internal
                     (str "'" code))
         functions (next expression)]
-    (str "(fn [& args] [" (string/join "\n              " (map #(str "(apply " % " args)") functions)) "])")))
+    (str expression "\n\n"
+         "(fn [& args] [" (string/join "\n              " (map #(str "(apply " % " args)") functions)) "])")))
