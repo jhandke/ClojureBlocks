@@ -1,0 +1,16 @@
+# ignore everything
+/**
+
+# track this file
+!.gitignore
+
+# html, css
+!index.html
+!style.css
+
+# js
+!js/main.js
+!js/manifest.edn
+
+# all images
+!img/**
