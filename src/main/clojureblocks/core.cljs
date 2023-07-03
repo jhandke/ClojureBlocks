@@ -32,8 +32,14 @@
 (def blockly-options
   {:move {:scrollbars {:horizontal true
                        :vertical true}
-          :drag true
-          :wheel false}})
+          :drag true}
+   :comments true
+   :trashcan true
+   :disable false
+   :zoom {:controls true
+          :wheel false
+          :maxScale 3
+          :minScale 0.1}})
 
 (defn show-code
   "Displays code in output-div"
