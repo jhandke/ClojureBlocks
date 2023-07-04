@@ -28,4 +28,4 @@ You can find a saved workspace with an implementation of the [marsrover kata](ht
 The `print-state` function will print to the developer console.
 See also the [Clojure counterpart](https://codeberg.org/jhandke/marsrover.clj) of this example.
 
-The example folder also contains a solution to the "Word Chains" exercise (#82) from 4clojure.
+The example folder also contains a solution to the [Word Chains](https://4clojure.oxal.org/#/problem/82) exercise from 4clojure.
