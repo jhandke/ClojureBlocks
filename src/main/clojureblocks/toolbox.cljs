@@ -18,13 +18,10 @@
             {:block {:type "symbol_block"
                      :fields {:symbol_name "inc"}}}
             :hof-map-collection
-            {:block {:type "list_block"
-                     :inputs {:list-items
-                              {:block {:type "symbol_block"
-                                       :fields {:symbol_name "range"}
-                                       :next
-                                       {:block {:type "number_block"
-                                                :fields {:number 10}}}}}}}}}})
+            {:block {:type "fn_call_block"
+                     :fields {:function_name "range"}
+                     :inputs {:function_arguments {:block {:type "number_block"
+                                                           :fields {:number 10}}}}}}}})
 
 (defn block-to-toolbox
   [block]
