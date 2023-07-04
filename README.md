@@ -6,6 +6,8 @@ Built with [Blockly](https://github.com/google/blockly). Blockly is a library fr
 
 Evaluation is done by [sci](https://github.com/babashka/sci).
 
+![](/images/map-square.png)
+
 ## Run
 1. `npm install`
 2. `npx shadow-cljs watch clojureblocks`
@@ -27,5 +29,3 @@ The `print-state` function will print to the developer console.
 See also the [Clojure counterpart](https://codeberg.org/jhandke/marsrover.clj) of this example.
 
 The example folder also contains a solution to the "Word Chains" exercise (#82) from 4clojure.
-
-See also the [Clojure counterpart](https://codeberg.org/jhandke/marsrover.clj) of this implementation.
