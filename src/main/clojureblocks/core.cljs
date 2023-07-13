@@ -44,7 +44,8 @@
 (defn show-code
   "Displays code in output-div"
   [code]
-  (let [formatted-code (zp/zprint-file-str code "clojureblocks" {:parse-string-all? true})]
+  (let [formatted-code (zp/zprint-file-str code "clojureblocks" {:parse-string-all? true
+                                                                 :width 80})]
     (set! (.. @output-div -innerText) formatted-code)))
 
 (defn apply-settings
