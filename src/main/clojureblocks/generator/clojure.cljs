@@ -17,5 +17,6 @@
       (string/join " " statements))))
 
 (defn expression
+  "Formats the given args in a list representation with correct spacing"
   [& args]
   (str "(" (string/trim (string/join " " (remove string/blank? args))) ")"))
