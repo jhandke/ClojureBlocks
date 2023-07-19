@@ -3,7 +3,6 @@
             [clojureblocks.storage :as storage]))
 
 (def storage-key "clojureblocks-ws")
-(def theme-key "clojureblocks-theme")
 (def settings-key "clojureblocks-settings")
 
 (defn serialize
