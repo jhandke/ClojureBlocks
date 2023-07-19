@@ -25,19 +25,6 @@
     (when-not (nil? data)
       (.parse js/JSON data))))
 
-(defn save-theme
-  "Saves the theme `id` to some storage"
-  [id]
-  (storage/set-item! theme-key (.stringify js/JSON id)))
-
-(defn load-theme
-  "Loads the theme id from storage"
-  []
-  (let [theme-id (storage/get-item theme-key)
-        parsed-id (.parse js/JSON theme-id)]
-    (when-not (nil? parsed-id)
-      (get {":light" :light, ":dark" :dark} parsed-id :unreachable))))
-
 (defn save-settings
   "Saves the `settings`-map to some storage"
   [settings]
