@@ -1,6 +1,7 @@
 (ns clojureblocks.sci-wrapper
   (:require [sci.core :as sci]))
 
+;; overwrite print functions to print into the developer console in the browser
 (enable-console-print!)
 (sci/alter-var-root sci/print-fn (constantly *print-fn*))
 (sci/alter-var-root sci/print-err-fn (constantly *print-err-fn*))
