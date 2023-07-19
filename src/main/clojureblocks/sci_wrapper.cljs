@@ -28,9 +28,9 @@
     (try
       (hash-map :expression expression
                 :result (sci/eval-string* @sci-context (emulate-print expression)))
-      (catch js/Error e
+      (catch js/Error error
         (hash-map :expression expression
-                  :error (. e -message))))))
+                  :error (. error -message))))))
 
 (defn evaluate-inspection
   "Evaluates a single `expression` for internal use."
