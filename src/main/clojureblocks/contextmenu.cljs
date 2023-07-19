@@ -56,8 +56,11 @@
 
 (defn register-contextmenu []
   (.. ContextMenuRegistry -registry
-      (register (clj->js hof-inspection-contextmenu-item)))
+      (register (clj->js hof-inspection-contextmenu-item))) 
   
-  ;; mit (doseq [x [1 2 3]] (foo x))
-  (dorun (map (fn [ctx-menu-item] (.. ContextMenuRegistry -registry (unregister ctx-menu-item)))
-              #{"blockCollapseExpand" "blockDisable" "workspaceDelete" "collapseWorkspace" "expandWorkspace"})))
+  (doseq [ctx-menu-item #{"blockCollapseExpand"
+                          "blockDisable"
+                          "workspaceDelete"
+                          "collapseWorkspace" 
+                          "expandWorkspace"}]
+    (.. ContextMenuRegistry -registry (unregister ctx-menu-item))))
