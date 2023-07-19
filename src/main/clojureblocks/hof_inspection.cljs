@@ -19,15 +19,15 @@
         num-previews @preview-length
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))] 
-    (str expression "\n;; => " evaluated-expression "\n\n"
+    (str expression "\n; => " evaluated-expression "\n\n"
          (string/join "\n"
                       (map
                        (fn [element]
                          (let [res (evaluator/evaluate-internal (str "(" pred " " element ")"))]
-                           (str "(" pred " " element ") ;; => " res)))
+                           (str "(" pred " " element ") ; => " res)))
                        inspection-elements))
          (when (> coll-size num-previews)
-           "\n;; ..."))))
+           "\n; ..."))))
 
 (defn filter-inspection
   [block]
@@ -42,7 +42,7 @@
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str expression "\n;; => " evaluated-expression "\n\n"
+    (str expression "\n; => " evaluated-expression "\n\n"
          (string/join "\n" (map
                             (fn [element]
                               (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
@@ -65,7 +65,7 @@
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str expression "\n;; => " evaluated-expression "\n\n"
+    (str expression "\n; => " evaluated-expression "\n\n"
          (string/join "\n" (map
                             (fn [element]
                               (let [result (evaluator/evaluate-internal (str "(" pred " " element ")"))
@@ -85,7 +85,7 @@
       (let [current-element (first elements)
             current-result (evaluator/evaluate-internal (str "(" pred " " current-element " " last-result ")"))
             last-result-presentation (when last-result (str " " last-result))
-            current-line (str "(" pred last-result-presentation " " current-element ") ;; => " current-result)]
+            current-line (str "(" pred last-result-presentation " " current-element ") ; => " current-result)]
         (recur (rest elements) current-result (conj result current-line))))))
 
 (defn reduce-inspection
@@ -103,7 +103,7 @@
         coll-size (evaluator/evaluate-internal (str "(count " coll ")"))
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
-    (str expression "\n;; => " evaluated-expression "\n\n"
+    (str expression "\n; => " evaluated-expression "\n\n"
      (if value
        (reduce-steps inspection-elements value pred)
        (reduce-steps (rest inspection-elements) (first inspection-elements) pred))
@@ -149,7 +149,7 @@
         evaluated-coll (evaluator/evaluate-internal (str "(partition-all 20 " coll ")"))
         prefix (str "(" function (when-not (empty? args) (str " " (string/join " " (map string-representation args)))) " ")
         prefix-length (count prefix)]
-    (str expression "\n;; => " evaluated-expression "\n\n"
+    (str expression "\n; => " evaluated-expression "\n\n"
          prefix (apply-rows evaluated-coll prefix-length) ")")))
 
 (defn juxt-inspection
