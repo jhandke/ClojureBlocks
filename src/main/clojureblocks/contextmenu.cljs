@@ -3,7 +3,9 @@
             [clojureblocks.hof-inspection :as inspection]
             [clojureblocks.modal-preview :as modal-preview]))
 
-(defmulti context-menu-action (fn [scope] (.. scope -block -type)))
+(defmulti context-menu-action 
+  "Mulitmethods to dispatch different actions for different block types"
+  (fn [scope] (.. scope -block -type)))
 
 (defmethod context-menu-action "hof_map_block"
   [scope]
@@ -33,7 +35,9 @@
  [scope]
  (modal-preview/display (inspection/juxt-inspection (. scope -block))))
 
-(defn precondition [scope]
+(defn hof-inspection-precondition 
+  "Precondition function for hof inspection context menu action"
+  [scope]
   (if (contains? #{"hof_map_block"
                    "hof_reduce_block"
                    "hof_filter_block"
@@ -51,10 +55,12 @@
                (context-menu-action scope))
    :scopeType (. (. ContextMenuRegistry -ScopeType) -BLOCK)
    :displayText (fn [] "Inspect")
-   :preconditionFn precondition
+   :preconditionFn hof-inspection-precondition
    :weight 0})
 
-(defn register-contextmenu []
+(defn register-contextmenu 
+  "Registers the contextmenu actions and unregisters unused actions"
+  []
   (.. ContextMenuRegistry -registry
       (register (clj->js hof-inspection-contextmenu-item))) 
   

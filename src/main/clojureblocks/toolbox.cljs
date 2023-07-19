@@ -24,6 +24,7 @@
                                                            :fields {:number 10}}}}}}}})
 
 (defn block-to-toolbox
+  "Gets the toolbox representation from block definition"
   [block]
   (let [name (get block :type)]
     {:kind "block"

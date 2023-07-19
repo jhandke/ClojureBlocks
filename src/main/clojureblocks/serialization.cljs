@@ -6,7 +6,7 @@
 (def settings-key "clojureblocks-settings")
 
 (defn serialize
-  "Serializes the `workspace`."
+  "Serializes the `workspace` object"
   [workspace]
   (.stringify js/JSON
               (.. blockly -serialization -workspaces (save workspace))))
@@ -25,7 +25,7 @@
       (.parse js/JSON data))))
 
 (defn save-settings
-  "Saves the `settings`-map to some storage"
+  "Saves the `settings` to some storage"
   [settings]
   (storage/set-item! settings-key (.stringify js/JSON (clj->js settings))))
 

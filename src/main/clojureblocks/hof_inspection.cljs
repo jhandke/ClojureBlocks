@@ -7,6 +7,7 @@
 (def preview-length (atom nil))
 
 (defn map-inspection
+  "Creates the inspection text for a given map `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
@@ -29,7 +30,8 @@
          (when (> coll-size num-previews)
            "\n; ..."))))
 
-(defn filter-inspection
+(defn filter-inspection 
+  "Creates the inspection text for a given filter `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
@@ -52,7 +54,8 @@
          (when (> coll-size num-previews)
            "\n; ..."))))
 
-(defn remove-inspection
+(defn remove-inspection 
+  "Creates the inspection text for a given remove `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
@@ -76,6 +79,7 @@
            "\n; ..."))))
 
 (defn reduce-steps
+  "Creates the steps for a reduce inspection"
   [elements start-value pred]
   (loop [elements elements
          last-result start-value
@@ -88,7 +92,8 @@
             current-line (str "(" pred last-result-presentation " " current-element ") ; => " current-result)]
         (recur (rest elements) current-result (conj result current-line))))))
 
-(defn reduce-inspection
+(defn reduce-inspection 
+  "Creates the inspection text for a given reduce `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
@@ -104,13 +109,14 @@
         num-previews @preview-length
         inspection-elements (evaluator/evaluate-internal (str "(take " num-previews " " coll ")"))]
     (str expression "\n; => " evaluated-expression "\n\n"
-     (if value
-       (reduce-steps inspection-elements value pred)
-       (reduce-steps (rest inspection-elements) (first inspection-elements) pred))
-     (when (> coll-size num-previews)
-       "\n; ..."))))
+         (if value
+           (reduce-steps inspection-elements value pred)
+           (reduce-steps (rest inspection-elements) (first inspection-elements) pred))
+         (when (> coll-size num-previews)
+           "\n; ..."))))
 
 (defn partial-inspection
+  "Creates the inspection text for a given partial `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
@@ -121,12 +127,14 @@
          "(fn [& args] (apply " function " " (string/join " " partial-args) " args))")))
 
 (defn string-representation
+  "Replaces quotes inside `maybe-string` with escaped quotes"
   [maybe-string]
   (if (string? maybe-string)
     (str "\"" maybe-string "\"") 
     maybe-string))
 
 (defn apply-rows
+  "Creates the rows with padding for the apply inspection"
   [coll prefix-length] 
   (string/join
    (apply str "\n" (repeat prefix-length " "))
@@ -135,7 +143,8 @@
                            (map string-representation row)))
     coll)))
 
-(defn apply-inspection
+(defn apply-inspection 
+  "Creates the inspection text for a given apply `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal
@@ -153,6 +162,7 @@
          prefix (apply-rows evaluated-coll prefix-length) ")")))
 
 (defn juxt-inspection
+  "Creates the inspection text with padding for a given juxt `block`"
   [block]
   (let [code (.blockToCode generator/generator block)
         expression (evaluator/evaluate-internal

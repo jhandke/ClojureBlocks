@@ -36,7 +36,9 @@
           (set! (.-height (.-style blockly-div)) (str (.-offsetHeight blockly-area) "px"))
           (.svgResize blockly @workspace))))))
 
-(defn generate-code-and-display [display-fn]
+(defn generate-code-and-display 
+  "Generates the blockly code and displays it with `display-fn`"
+  [display-fn]
   (let [old-code @generated-code
         new-code (.workspaceToCode
                   generator/generator
@@ -45,22 +47,26 @@
       (reset! generated-code new-code)
       (display-fn new-code))))
 
-(defn blockly-change-handler [output-function]
+(defn blockly-change-handler 
+  "Updates the code output and saves the workspace"
+  [output-function]
   (generate-code-and-display output-function)
   (serialization/save-workspace @workspace))
 
-(defn load-workspace [data]
+(defn load-workspace 
+  "Loads the workspace from `data`. Does nothing when `data` is nil"
+  [data]
   (when data
     (.. blockly -serialization -workspaces
         (load data @workspace false))))
 
 (defn define-blocks
-  "Injects `blocks` into blockly."
+  "Injects `blocks` into blockly"
   [blocks]
   (.defineBlocksWithJsonArray blockly (clj->js  blocks)))
 
 (defn inject-workspace
-  "Injects the blockly workspace."
+  "Injects the blockly workspace into the DOM"
   [options]
   (let [blockly-div (.getElementById js/document blockly-div-id)]
     (.replaceChildren blockly-div)
@@ -68,15 +74,17 @@
             (.inject blockly "blockly-div" (clj->js (merge {:toolbox (toolbox/generate-toolbox)} options))))))
   
 (defn reset-blocks 
-  [persist]
-  (when persist
+  "Resets the workspace. Saves before when `persist?` is true."
+  [persist?]
+  (when persist?
     (serialization/save-workspace @workspace))
   (. @workspace clear))
 
 (defn init-workspace
-  [options output-function]
+  "Initializes the blockly workspace with `blockly-options` and sets the code display function to `output-function`"
+  [blockly-options output-function]
   (define-blocks blocks/all-blocks)
-  (inject-workspace options)
+  (inject-workspace blockly-options)
   (load-workspace (serialization/load-workspace))
   (.addEventListener js/window "resize" resize-handler false)
   (resize-handler)
@@ -84,9 +92,12 @@
   (contextmenu/register-contextmenu))
 
 (defn set-dark-theme
+  "Applies the dark theme, if `dark?` is true, applies the light theme otherwise"
   [dark?]
   (let [new-theme (if dark? (get themes :dark) (get themes :light))]
     (.. ^js/Object @workspace -themeManager_ (setTheme new-theme))))
 
-(defn export-workspace []
+(defn export-workspace
+  "Serializes the workspace and returns the result"
+  []
   (serialization/serialize @workspace))

@@ -49,12 +49,13 @@
     (set! (.. @output-div -innerText) formatted-code)))
 
 (defn apply-settings
+  "Applies the settings in `settings-map`"
   [settings-map]
   (set! (.-disabled @button-evaluate) (get settings-map :auto-evaluation))
   (evaluator/set-print-length (get settings-map :print-length))
   (reset! hof-inspection/preview-length (get settings-map :preview-length))
 
-  (if (= true (get settings-map :dark-theme))
+  (if (true? (get settings-map :dark-theme))
     (do
       (set! (.. @theme-switch -checked) true)
       (.. @dialog-settings -classList (add "dialog-dark"))
@@ -74,11 +75,14 @@
     (apply-settings new)
     (serialization/save-settings new)))
 
-(defn handle-theme-switch [e]
-  (let [switch-checked (.. e -target -checked)]
+(defn handle-theme-switch 
+  "Handles the onSwitch event from theme switcher"
+  [event]
+  (let [switch-checked (.. event -target -checked)]
     (update-settings {:dark-theme switch-checked})))
 
 (defn open-settings-dialog
+  "Opens the settings dialog with currently applied settings"
   []
   (let [settings @settings]
     (set! (.-checked @checkbox-auto-evaluate) (get settings :auto-evaluation))
@@ -87,6 +91,7 @@
   (.showModal @dialog-settings))
 
 (defn handle-settings-dialog
+  "Updates the new settings and closes the settings dialog"
   []
   (let [settings-map {:auto-evaluation (. @checkbox-auto-evaluate -checked)
                       :print-length (js/parseInt (. @input-print-length -value))
@@ -94,19 +99,26 @@
     (update-settings settings-map)
     (.close @dialog-settings)))
 
-(defn reset []
+(defn reset 
+  "Resets the blockly workspace and the evaluator"
+  []
   (blockly-wrapper/reset-blocks true)
   (evaluator/reset-evaluation-context)
   (show-code ""))
 
-(defn download-workspace []
+(defn download-workspace
+  "Downloads the current workspace as file"
+  []
   (let [data (blockly-wrapper/export-workspace)]
     (import-export/download-data data "workspace.json" "text/json")))
 
-(defn upload-workspace []
+(defn upload-workspace
+  "Uploads a new workspace file"
+  []
   (import-export/file-input (fn [file] (blockly-wrapper/load-workspace (.parse js/JSON file)))))
 
 (defn evaluate-code-and-display
+  "Evaluates the given `code` and displays it"
   [code]
   (show-code
    (string/join "\n\n"
@@ -119,6 +131,7 @@
                      (evaluator/split-and-evaluate code)))))
 
 (defn evaluate-manual
+  "Evaluates the currently generated code and displays it"
   []
   (show-code
    (string/join "\n\n"
@@ -131,12 +144,15 @@
                      (evaluator/split-and-evaluate @blockly-wrapper/generated-code)))))
 
 (defn code-update-handler
+  "Handles the change of the generated code"
   [code]
   (if (get @settings :auto-evaluation)
     (evaluate-code-and-display code)
     (show-code (string/join "\n\n" (string/split-lines code)))))
 
-(defn register-io []
+(defn register-io
+  "Registers all event handlers not owned by blockly"
+  []
   (reset! output-div (.getElementById js/document "output"))
 
   (reset! button-evaluate (.getElementById js/document "button-evaluate-all"))
@@ -167,6 +183,7 @@
   (.addEventListener @theme-switch "change" handle-theme-switch))
 
 (defn load-settings
+  "Loads the saved settings from storage and applies them"
   []
   (let [settings-map (serialization/load-settings)]
     (update-settings settings-map)))

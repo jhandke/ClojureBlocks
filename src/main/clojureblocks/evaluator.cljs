@@ -3,6 +3,7 @@
             [clojureblocks.sci-wrapper :as sci]))
 
 (defn set-print-length
+  "Sets the print-length in the evaluator"
   [value]
   (reset! sci/clojureblocks-print-length value))
 
