@@ -18,12 +18,14 @@
     (generator/expression function-name function-arguments)))
 
 (defn generate-fn-block
+  "Generates the code for an anonoymous function block: `(fn [& args] body)`"
   [block]
   (let [args (generator/generate-statement-code block "args")
         body (generator/generate-statement-code block "body")]
     (generator/expression "fn" (str "[" args "]") body)))
 
 (defn generate-def-block
+  "Generates the code for a def block: `(def name value)`"
   [^blockly/Block block]
   (let [name (.getFieldValue block "symbol_name")
         value (generator/generate-statement-code block "value")]
