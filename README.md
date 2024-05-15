@@ -13,7 +13,7 @@ Evaluation is done by [sci](https://github.com/babashka/sci).
 2. `npx shadow-cljs watch clojureblocks`
 3. open `localhost:8080`
 
-or try it out in your browser: [ClojureBlocks live](https://jhandke.codeberg.page/clojureblocks/)
+or try it out in your browser: [ClojureBlocks live](https://jhandke.github.io/ClojureBlocks/)
 
 
 ## Tutorial
